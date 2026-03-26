@@ -1,0 +1,2007 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tagore Playbook Academy — Member Registration</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@300;400;600;700&family=Barlow:wght@300;400;500;600&display=swap');
+:root{
+  --navy:#0A1628;--navy2:#0F1E35;--navy3:#162740;
+  --gold:#F5A623;--gold2:#C4821A;--gold-lt:#FDE9B8;
+  --white:#fff;--off:#F7F8FA;
+  --border:#DDE3EC;--border2:#BCC8D8;
+  --text:#1A2535;--text2:#4A5C72;--text3:#7A8FA6;
+  --green:#1B5E20;--green-lt:#E8F5E9;
+  --red:#B71C1C;--red-lt:#FFEBEE;
+  --radius:8px;--radius-lg:12px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Barlow',sans-serif;background:#E8EDF4;min-height:100vh;padding:20px 12px 60px;color:var(--text)}
+.wrapper{max-width:820px;margin:0 auto}
+
+/* HEADER */
+.form-header{background:var(--navy);border-radius:var(--radius-lg) var(--radius-lg) 0 0;padding:22px 28px 18px;display:flex;align-items:center;gap:14px}
+.crest{width:52px;height:52px;border-radius:50%;background:var(--navy2);border:2px solid var(--gold2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hn{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:3px;color:#fff;line-height:1}
+.hs{font-family:'Barlow Condensed',sans-serif;font-size:11px;letter-spacing:2px;color:var(--gold);margin-top:3px}
+.ht{font-family:'Barlow Condensed',sans-serif;font-size:10px;color:rgba(255,255,255,0.3);margin-top:1px;letter-spacing:1px}
+
+/* EARLY BIRD */
+.eb{background:#CCE800;padding:10px 28px;display:flex;align-items:center;gap:10px}
+.eb-t{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:2px;color:var(--navy)}
+.eb-s{font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:600;color:rgba(10,22,40,.55);letter-spacing:1px;margin-top:1px}
+.eb-b{margin-left:auto;background:var(--navy);color:#CCE800;font-family:'Bebas Neue',sans-serif;font-size:11px;letter-spacing:2px;padding:3px 10px;border-radius:3px;white-space:nowrap}
+
+/* PROGRESS */
+.pbar{background:var(--navy2);padding:0 28px;display:flex;border-bottom:1px solid rgba(255,255,255,.07)}
+.ps{flex:1;padding:10px 0;font-family:'Barlow Condensed',sans-serif;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.28);cursor:pointer;text-align:center;position:relative}
+.ps.active{color:var(--gold)}.ps.done{color:rgba(255,255,255,.5)}
+.ps.active::after,.ps.done::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px}
+.ps.active::after{background:var(--gold)}.ps.done::after{background:rgba(255,255,255,.18)}
+
+/* FORM */
+.form-body{background:#fff;border-radius:0 0 var(--radius-lg) var(--radius-lg);overflow:hidden}
+.sec{padding:22px 28px;display:none}
+.sec.active{display:block}
+.sec-hdr{display:flex;align-items:center;gap:9px;margin-bottom:16px}
+.sec-ico{width:28px;height:28px;border-radius:6px;background:var(--navy);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sec-ico svg{width:14px;height:14px;fill:var(--gold)}
+.sec-nm{font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:1px;color:var(--navy);text-transform:uppercase}
+.sec-sb{font-size:11px;color:var(--text3);margin-top:1px}
+.sub-hdr{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--text2);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.divider{border-top:2px solid var(--border);margin:20px 0}
+
+/* FIELDS */
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fg.c3{grid-template-columns:1fr 1fr 1fr}
+.field{display:flex;flex-direction:column;gap:4px}
+.field.full{grid-column:1/-1}
+label{font-size:10px;font-weight:600;color:var(--text2);letter-spacing:.3px;text-transform:uppercase}
+label .req{color:var(--red);margin-left:2px}
+label .opt{color:var(--text3);font-weight:400;font-size:10px;text-transform:none;margin-left:2px}
+input[type=text],input[type=date],input[type=tel],input[type=email],input[type=number],select,textarea{
+  height:40px;border:1.5px solid var(--border);border-radius:var(--radius);padding:0 11px;
+  font-family:'Barlow',sans-serif;font-size:13px;color:var(--text);background:var(--off);
+  transition:border-color .15s;outline:none;width:100%
+}
+textarea{height:62px;padding:9px 11px;resize:vertical}
+input:focus,select:focus,textarea:focus{border-color:var(--gold2);background:#fff}
+input[readonly]{background:#F0F2F5;color:var(--text2);cursor:default}
+.hint{font-size:10px;color:var(--text3);margin-top:2px}
+.err-msg{font-size:10px;color:var(--red);margin-top:2px;display:none}
+.field.has-error .err-msg{display:block}
+.field.has-error input,.field.has-error select{border-color:var(--red)}
+.auto-badge{display:inline-flex;align-items:center;background:#E3F2FD;color:#0C447C;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;margin-top:3px;height:20px}
+
+/* PHOTO */
+.photo-box{width:110px;min-height:132px;border:2px dashed var(--border2);border-radius:var(--radius);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px;cursor:pointer;background:var(--off);position:relative;flex-shrink:0}
+.photo-box:hover{border-color:var(--gold2)}
+#photo-preview{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid var(--gold);display:none}
+.photo-ph{width:58px;height:58px;border-radius:50%;background:var(--border);display:flex;align-items:center;justify-content:center}
+.photo-ph svg{width:28px;height:28px;fill:var(--text3)}
+
+/* PILLS */
+.pill-group{display:flex;gap:6px;flex-wrap:wrap;margin-top:2px}
+.pill{display:flex;align-items:center;gap:4px;padding:6px 13px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s;background:var(--off);user-select:none}
+.pill input{display:none}
+.pill:hover{border-color:var(--gold2)}
+.pill.ck{border-color:var(--gold);background:var(--gold-lt);color:var(--navy);font-weight:500}
+
+/* SPORTS */
+.sport-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+.sport-lbl{display:flex;flex-direction:column;align-items:center;gap:3px;padding:8px 5px;border:1.5px solid var(--border);border-radius:var(--radius);cursor:pointer;font-size:10px;font-weight:600;color:var(--text2);text-align:center;transition:all .15s;background:var(--off);user-select:none}
+.sport-lbl input{display:none}
+.sport-lbl:hover{border-color:var(--gold2)}
+.sport-lbl.ck{border-color:var(--gold);background:var(--gold-lt);color:var(--navy)}
+.sport-icon{font-size:17px;line-height:1}
+
+/* REG FEE */
+.fee-box{background:var(--navy2);border-radius:var(--radius);padding:12px 14px;margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.fee-ico{width:32px;height:32px;border-radius:50%;background:var(--gold);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.fee-ico svg{width:16px;height:16px;fill:var(--navy)}
+.fee-t{font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;color:#fff;letter-spacing:1px}
+.fee-s{font-size:10px;color:rgba(255,255,255,.38);margin-top:1px}
+.fee-amt{margin-left:auto;text-align:right}
+.fee-orig{font-family:'Bebas Neue',sans-serif;font-size:15px;color:rgba(255,255,255,.3);text-decoration:line-through}
+.fee-waived{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:#CCE800}
+.fee-note{font-size:9px;color:rgba(204,232,0,.55);letter-spacing:1px;margin-top:1px}
+
+/* PACKS */
+.tier{margin-bottom:14px;display:none}
+.tier.show{display:block}
+.tier-hdr{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:6px 11px;border-radius:4px;margin-bottom:7px}
+.tm .tier-hdr{background:#E8F5E9;color:#1B5E20}
+.tu .tier-hdr{background:#E3F2FD;color:#0C447C}
+.tv .tier-hdr{background:#FFF3E0;color:#E65100}
+.te .tier-hdr{background:var(--gold-lt);color:#7B3F00}
+.ta .tier-hdr{background:#F3E5F5;color:#4A148C}
+
+.pack-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}
+.pack-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:10px;cursor:pointer;transition:all .15s;background:var(--off);position:relative}
+.pack-card input{display:none}
+.pack-card:hover{border-color:var(--gold2)}
+.pack-card.ck{border-color:var(--gold);background:var(--gold-lt)}
+.pack-card.ck::after{content:'✓';position:absolute;top:6px;right:8px;font-size:11px;font-weight:700;color:var(--gold2)}
+.ph{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:2px}
+.pn{font-family:'Barlow Condensed',sans-serif;font-size:11px;font-weight:700;color:var(--navy)}
+.pv{font-size:9px;color:var(--text3)}
+.pp{font-family:'Bebas Neue',sans-serif;font-size:19px;letter-spacing:1px;color:var(--gold2)}
+.ps2{font-size:10px;color:var(--text2);margin-top:2px}
+.pd{font-size:9px;color:var(--text3)}
+.pb{display:inline-block;background:var(--green-lt);color:var(--green);font-size:9px;font-weight:700;padding:1px 5px;border-radius:9px;margin-top:2px}
+
+/* ORDER SUMMARY */
+.sum-box{background:var(--off);border:1px solid var(--border);border-radius:var(--radius);padding:11px 13px;margin-top:9px}
+.sum-row{display:flex;justify-content:space-between;padding:4px 0;font-size:12px;border-bottom:1px solid var(--border)}
+.sum-row:last-child{border-bottom:none}
+.sum-row.total{font-weight:600;font-size:13px;margin-top:3px;padding-top:6px;border-top:2px solid var(--border2)}
+.sk{color:var(--text2)}.sv{color:var(--text);font-weight:500}
+.sv.waived{color:var(--green);font-weight:600}
+.sv.tax{color:var(--text3);font-size:11px}
+
+/* SHIFT */
+.shift-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.shift-card{border:1.5px solid var(--border);border-radius:var(--radius);padding:10px;cursor:pointer;text-align:center;transition:all .15s;background:var(--off)}
+.shift-card input{display:none}
+.shift-card:hover{border-color:var(--gold2)}
+.shift-card.ck{border-color:var(--gold);background:var(--gold-lt)}
+.sh-t{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:var(--navy)}
+.sh-s{font-size:9px;color:var(--text3);margin-top:2px}
+/* The u13/u17 extra slots - hidden by default */
+.shift-u13{display:none}
+.show-u13 .shift-u13{display:block}
+
+/* YN */
+.yn-group{display:flex;gap:6px;margin-bottom:7px}
+.yn-lbl{display:flex;align-items:center;gap:4px;padding:5px 12px;border:1.5px solid var(--border);border-radius:20px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .15s;background:var(--off);user-select:none}
+.yn-lbl input{display:none}
+.yn-lbl.ck{border-color:var(--gold);background:var(--gold-lt);color:var(--navy);font-weight:500}
+#med-wrap{display:none;margin-top:7px}
+
+/* CONSENT */
+.con-block{display:flex;align-items:flex-start;gap:9px;padding:10px;background:var(--off);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:7px}
+.con-block input{width:16px;height:16px;border-radius:3px;flex-shrink:0;margin-top:1px;cursor:pointer;accent-color:var(--navy)}
+.con-text{font-size:12px;color:var(--text2);line-height:1.5}
+.con-text strong{color:var(--text);font-weight:600}
+
+/* PAYMENT */
+.pay-section{background:var(--navy2);border-radius:var(--radius);padding:16px;margin-top:14px}
+.pay-title{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#fff;letter-spacing:1px;margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.pay-title svg{width:16px;height:16px;fill:var(--gold)}
+.pay-row{margin-bottom:12px}
+.pay-label{font-size:10px;font-weight:600;color:rgba(255,255,255,.45);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.pay-amount{font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff;letter-spacing:2px;margin-bottom:2px}
+.pay-breakdown{font-size:10px;color:rgba(255,255,255,.35);margin-bottom:8px}
+.pay-methods{display:grid;grid-template-columns:repeat(5,1fr);gap:6px;margin-bottom:10px}
+.pay-method{border:1.5px solid rgba(255,255,255,.15);border-radius:6px;padding:8px 4px;cursor:pointer;text-align:center;transition:all .15s;background:rgba(255,255,255,.05)}
+.pay-method input{display:none}
+.pay-method:hover{border-color:rgba(212,255,0,.4)}
+.pay-method.ck{border-color:#CCE800;background:rgba(212,255,0,.1)}
+.pay-method-icon{font-size:18px;display:block;margin-bottom:2px}
+.pay-method-name{font-size:9px;font-weight:600;color:rgba(255,255,255,.55);letter-spacing:.5px}
+.pay-method.ck .pay-method-name{color:#CCE800}
+.cash-note{font-size:10px;color:rgba(255,255,255,.35);padding:6px 10px;background:rgba(255,255,255,.05);border-radius:5px;display:none}
+.pay-btn{width:100%;background:#CCE800;color:var(--navy);border:none;border-radius:var(--radius);padding:12px;font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;letter-spacing:2px;cursor:pointer;text-transform:uppercase;display:flex;align-items:center;justify-content:center;gap:6px;margin-top:8px;transition:all .15s}
+.pay-btn:hover{background:#b8d000}
+.pay-btn:disabled{background:rgba(255,255,255,.15);color:rgba(255,255,255,.3);cursor:not-allowed}
+.pay-divider{border:none;border-top:1px solid rgba(255,255,255,.1);margin:12px 0}
+
+/* REVIEW */
+.rev-sec{margin-bottom:11px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+.rev-hdr{padding:6px 12px;background:var(--navy2);font-family:'Barlow Condensed',sans-serif;font-size:10px;font-weight:700;letter-spacing:1.5px;color:var(--gold);text-transform:uppercase}
+.rev-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 12px;border-bottom:1px solid var(--border);font-size:12px}
+.rev-row:last-child{border-bottom:none}
+.rk{color:var(--text2);min-width:140px;flex-shrink:0}.rv{color:var(--text);font-weight:500;text-align:right}
+
+/* NAV */
+.form-nav{padding:16px 28px;display:flex;justify-content:space-between;align-items:center;background:var(--off);border-top:1px solid var(--border)}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:9px 20px;border-radius:var(--radius);font-family:'Barlow Condensed',sans-serif;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;border:none;transition:all .15s;text-transform:uppercase}
+.btn-back{background:#fff;color:var(--text2);border:1.5px solid var(--border)}.btn-back:hover{border-color:var(--border2)}
+.btn-next{background:var(--navy);color:#fff}.btn-next:hover{background:var(--navy3)}
+.btn-sub{background:var(--gold);color:var(--navy)}.btn-sub:hover{background:var(--gold2)}
+.step-ctr{font-size:10px;color:var(--text3)}
+.info-strip{background:#E3F2FD;border:1px solid #B5D4F4;border-radius:var(--radius);padding:8px 11px;font-size:10px;color:#0C447C;display:flex;gap:6px;align-items:flex-start;margin-bottom:12px}
+.info-strip svg{width:12px;height:12px;fill:#185FA5;flex-shrink:0;margin-top:1px}
+
+/* INFO BOX */
+.info-box{background:#FFF8E1;border:1px solid #FFD54F;border-radius:var(--radius);padding:14px 16px;margin:16px 0}
+.info-box h3{font-family:'Barlow Condensed',sans-serif;font-size:14px;font-weight:700;color:#E65100;letter-spacing:1px;margin-bottom:8px}
+.info-box p{font-size:12px;color:var(--text2);line-height:1.6;margin-bottom:6px}
+.info-box ul{font-size:12px;color:var(--text2);line-height:1.7;padding-left:16px}
+.info-box code{background:#F5F5F5;border:1px solid #E0E0E0;border-radius:3px;padding:2px 6px;font-size:11px;color:#C62828}
+
+/* SUCCESS */
+.success-screen{display:none;padding:44px 28px;text-align:center}
+.succ-icon{width:60px;height:60px;border-radius:50%;background:var(--green-lt);display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
+.succ-icon svg{width:30px;height:30px;fill:var(--green)}
+.succ-t{font-family:'Bebas Neue',sans-serif;font-size:25px;letter-spacing:3px;color:var(--navy);margin-bottom:5px}
+.succ-s{font-size:13px;color:var(--text2);line-height:1.6;max-width:420px;margin:0 auto}
+.mid-box{display:inline-block;background:var(--gold-lt);border:1px solid var(--gold2);border-radius:var(--radius);padding:10px 20px;margin:14px auto}
+.mid-label{font-size:9px;color:var(--text3);text-transform:uppercase;letter-spacing:1px}
+.mid-val{font-family:'Barlow Condensed',sans-serif;font-size:22px;font-weight:700;color:var(--navy);letter-spacing:3px}
+.mid-sub{font-size:10px;color:var(--text3);margin-top:2px}
+.eb-succ{background:var(--green-lt);border:1px solid #A5D6A7;border-radius:var(--radius);padding:9px 14px;font-size:12px;color:var(--green);margin-top:7px;font-weight:500}
+.next-steps{background:var(--off);border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:14px;text-align:left}
+.next-steps h4{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;color:var(--navy);text-transform:uppercase;margin-bottom:8px}
+.next-steps li{font-size:12px;color:var(--text2);line-height:1.7;margin-left:16px}
+
+
+/* Bonus session highlight */
+.sess-base{color:var(--text2);font-size:10px}
+.sess-bonus{color:var(--green);font-weight:700;font-size:10px;background:var(--green-lt);padding:1px 5px;border-radius:8px}
+.sess-total{color:var(--navy);font-size:10px}
+/* Validity with extra days highlight */
+.pval-block{margin:2px 0 3px;display:flex;flex-direction:column;gap:1px}
+.pval-months{font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--text2);letter-spacing:.5px}
+.pval-extra{font-size:9px;font-weight:700;color:#7B2FBE;background:#F3E5F5;padding:1px 5px;border-radius:8px;display:inline-block;width:fit-content}
+
+@media(max-width:580px){
+  .fg,.fg.c3,.pack-grid{grid-template-columns:1fr 1fr}
+  .sport-grid{grid-template-columns:repeat(2,1fr)}
+  .shift-grid,.pay-methods{grid-template-columns:repeat(3,1fr)}
+  .sec,.form-nav{padding:16px 14px}
+  .form-header{flex-direction:column;text-align:center}
+  .pbar{padding:0 6px}
+  .ps{font-size:7px;padding:8px 1px}
+}
+</style>
+</head>
+<body>
+<div class="wrapper">
+
+<!-- HEADER -->
+<div class="form-header">
+  <img src="data:image/png;base64,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" alt="Tagore Playbook Academy" style="height:52px;object-fit:contain;flex-shrink:0;border-radius:4px">
+  <div style="margin-left:4px">
+    <div class="hs" style="font-size:12px;letter-spacing:2px">Member Registration · Sector 89, Faridabad</div>
+    <div class="ht">You Play, We Plan · www.playbookpartnerz.com</div>
+    <div class="ht" style="margin-top:2px">9990906869 · 9034869994 · 9953981598</div>
+  </div>
+</div>
+
+<!-- EARLY BIRD -->
+<div class="eb">
+  <div>
+    <div class="eb-t">First 25 Registrations — Registration Fee Waived!</div>
+    <div class="eb-s">One-time Registration Fee of ₹3,000 is FREE for first 25 members</div>
+  </div>
+  <div class="eb-b">EARLY BIRD</div>
+</div>
+
+<!-- PROGRESS — 5 steps -->
+<div class="pbar">
+  <div class="ps active" onclick="goTo(0)">1. Member &amp; Pass</div>
+  <div class="ps" onclick="goTo(1)">2. Health</div>
+  <div class="ps" onclick="goTo(2)">3. Consent</div>
+  <div class="ps" onclick="goTo(3)">4. Review</div>
+  <div class="ps" onclick="goTo(4)">5. Payment</div>
+</div>
+
+<div class="form-body">
+
+<!-- ══════════════════════════════════════════
+     STEP 1 — MEMBER DETAILS + MEMBERSHIP
+══════════════════════════════════════════ -->
+<div class="sec active" id="sec-0">
+  <div class="sec-hdr">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg></div>
+    <div><div class="sec-nm">Member Details &amp; Membership</div><div class="sec-sb">Personal info and session pack</div></div>
+  </div>
+
+  <!-- Photo + Name row -->
+  <div style="display:flex;gap:16px;align-items:flex-start;margin-bottom:14px">
+    <div>
+      <label style="display:block;margin-bottom:5px">Member Photo</label>
+      <div class="photo-box" onclick="document.getElementById('pf').click()">
+        <input type="file" id="pf" accept="image/*" style="display:none" onchange="doPhoto(this)">
+        <img id="photo-preview" alt="">
+        <div class="photo-ph" id="photo-ph"><svg viewBox="0 0 24 24"><path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v2h20v-2c0-3.3-6.7-5-10-5z"/></svg></div>
+        <span id="ph-lbl" style="font-size:10px;font-weight:600;color:var(--text2);text-align:center;line-height:1.3">Tap to<br>Upload</span>
+        <span id="ph-hint" style="font-size:9px;color:var(--text3);text-align:center">JPG/PNG<br>Passport</span>
+        <span id="ph-ok" style="font-size:10px;font-weight:700;color:var(--green);display:none">Photo ✓</span>
+      </div>
+    </div>
+    <div style="flex:1;display:flex;flex-direction:column;gap:10px">
+      <div class="field">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="member-name" placeholder="As per Aadhaar / School ID">
+        <div class="err-msg">Full name is required</div>
+      </div>
+      <div class="fg">
+        <div class="field">
+          <label>Date of Birth <span class="req">*</span></label>
+          <input type="date" id="dob" onchange="calcAge()">
+          <div class="err-msg">Date of birth required</div>
+        </div>
+        <div class="field">
+          <label>Age <span class="opt">(auto)</span></label>
+          <input type="text" id="age-display" readonly placeholder="—">
+          <div id="age-badge" style="display:none"><span class="auto-badge" id="age-grp"></span></div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Gender <span class="req">*</span></label>
+        <div class="pill-group">
+          <label class="pill" onclick="pl(this,'gender')"><input type="radio" name="gender" value="Male"> Male</label>
+          <label class="pill" onclick="pl(this,'gender')"><input type="radio" name="gender" value="Female"> Female</label>
+          <label class="pill" onclick="pl(this,'gender')"><input type="radio" name="gender" value="Other"> Other</label>
+        </div>
+        <div class="err-msg" id="gender-err">Please select gender</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- School + Grade -->
+  <div class="fg" style="margin-bottom:12px">
+    <div class="field">
+      <label>School / Institution / Office Name</label>
+      <input type="text" id="school" placeholder="e.g. Tagore Public School, Sec 89">
+    </div>
+    <div class="field">
+      <label>Class / Grade <span class="opt">(students)</span></label>
+      <select id="grade">
+        <option value="">— Select —</option>
+        <option>Pre-Primary / Nursery</option>
+        <option>Class 1</option><option>Class 2</option><option>Class 3</option><option>Class 4</option><option>Class 5</option>
+        <option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option>
+        <option>Class 11</option><option>Class 12</option><option>College / University</option><option>N/A (Adult)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Address -->
+  <div class="field" style="margin-bottom:9px">
+    <label>Residential Address <span class="req">*</span></label>
+    <textarea id="address" placeholder="House/Flat No., Street, Colony, Sector"></textarea>
+    <div class="err-msg">Address is required</div>
+  </div>
+  <div class="fg c3" style="margin-bottom:14px">
+    <div class="field"><label>City</label><input type="text" id="city" value="Faridabad"></div>
+    <div class="field">
+      <label>Sector / Area</label>
+      <select id="sector">
+        <option value="">— Select —</option>
+        <option>Sector 1</option><option>Sector 2</option><option>Sector 3</option><option>Sector 4</option><option>Sector 5</option>
+        <option>Sector 6</option><option>Sector 7</option><option>Sector 8</option><option>Sector 9</option><option>Sector 10</option>
+        <option>Sector 11</option><option>Sector 12</option><option>Sector 13</option><option>Sector 14</option><option>Sector 15</option>
+        <option>Sector 16</option><option>Sector 17</option><option>Sector 18</option><option>Sector 19</option><option>Sector 20</option>
+        <option>Sector 21</option><option>Sector 22</option><option>Sector 23</option><option>Sector 24</option><option>Sector 25</option>
+        <option>Sector 26</option><option>Sector 27</option><option>Sector 28</option><option>Sector 29</option><option>Sector 30</option>
+        <option>Sector 31</option><option>Sector 32</option><option>Sector 33</option><option>Sector 34</option><option>Sector 35</option>
+        <option>Sector 36</option><option>Sector 37</option><option>Sector 38</option><option>Sector 39</option><option>Sector 40</option>
+        <option>Sector 41</option><option>Sector 42</option><option>Sector 43</option><option>Sector 44</option><option>Sector 45</option>
+        <option>Sector 46</option><option>Sector 47</option><option>Sector 48</option><option>Sector 49</option><option>Sector 50</option>
+        <option>Sector 51</option><option>Sector 52</option><option>Sector 53</option><option>Sector 54</option><option>Sector 55</option>
+        <option>Sector 56</option><option>Sector 57</option><option>Sector 58</option><option>Sector 59</option><option>Sector 60</option>
+        <option>Sector 61</option><option>Sector 62</option><option>Sector 63</option><option>Sector 64</option><option>Sector 65</option>
+        <option>Sector 66</option><option>Sector 67</option><option>Sector 68</option><option>Sector 69</option><option>Sector 70</option>
+        <option>Sector 71</option><option>Sector 72</option><option>Sector 73</option><option>Sector 74</option><option>Sector 75</option>
+        <option>Sector 76</option><option>Sector 77</option><option>Sector 78</option><option>Sector 79</option><option>Sector 80</option>
+        <option>Sector 81</option><option>Sector 82</option><option>Sector 83</option><option>Sector 84</option><option>Sector 85</option>
+        <option>Sector 86</option><option>Sector 87</option><option>Sector 88</option><option>Sector 89</option><option>Sector 90</option>
+        <option>Sector 91</option><option>Sector 92</option><option>Sector 93</option>
+        <option>──────────</option>
+        <option>Ballabhgarh</option><option>Mujesar</option><option>NIT Faridabad</option><option>Old Faridabad</option>
+        <option>Palwal</option><option>Surajkund</option><option>Tigaon</option><option>Other</option>
+      </select>
+    </div>
+    <div class="field"><label>Pincode</label><input type="text" id="pin" placeholder="121002" maxlength="6"></div>
+  </div>
+
+  <!-- Parent -->
+  <div class="sub-hdr">Parent / Guardian</div>
+  <div class="fg">
+    <div class="field"><label>Name <span class="req">*</span></label><input type="text" id="parent-name" placeholder="Full name"><div class="err-msg">Required</div></div>
+    <div class="field"><label>Relationship <span class="req">*</span></label>
+      <select id="relation"><option value="">— Select —</option><option>Father</option><option>Mother</option><option>Guardian</option><option>Self (Adult)</option></select>
+      <div class="err-msg">Required</div>
+    </div>
+    <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="parent-phone" placeholder="+91 98765 43210" maxlength="13"><div class="err-msg">Required</div></div>
+    <div class="field"><label>Member's Mobile <span class="opt">(if 13+)</span></label><input type="tel" id="member-phone" placeholder="+91 98765 43210" maxlength="13"></div>
+    <div class="field"><label>Email</label><input type="email" id="email" placeholder="parent@email.com"></div>
+    <div class="field"><label>Emergency Contact <span class="req">*</span></label><input type="tel" id="emergency" placeholder="+91 98765 43210" maxlength="13"><div class="err-msg">Required</div><div class="hint">Different from parent mobile</div></div>
+  </div>
+
+  <!-- Transport -->
+  <div class="sub-hdr" style="margin-top:14px">Transport Required?</div>
+  <div class="hint" style="margin-bottom:7px">Academy transport available to Sector 89 campus</div>
+  <div class="pill-group">
+    <label class="pill" onclick="pl(this,'transport');toggleTransport('Yes')"><input type="radio" name="transport" value="Yes"> ✅ Yes</label>
+    <label class="pill" onclick="pl(this,'transport');toggleTransport('No')"><input type="radio" name="transport" value="No"> No</label>
+  </div>
+  <div id="transport-details" style="display:none;margin-top:12px;background:#E3F2FD;border:1px solid #B5D4F4;border-radius:var(--radius);padding:14px 16px">
+    <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:#0C447C;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase">📍 Pickup Location Details</div>
+    <div class="fg" style="gap:10px">
+      <div class="field">
+        <label>Pickup Sector <span class="req">*</span></label>
+        <select id="transport-sector" onchange="loadSocieties()">
+          <option value="">— Select Sector —</option>
+          <option>Sector 1</option><option>Sector 2</option><option>Sector 3</option><option>Sector 4</option><option>Sector 5</option>
+          <option>Sector 6</option><option>Sector 7</option><option>Sector 8</option><option>Sector 9</option><option>Sector 10</option>
+          <option>Sector 11</option><option>Sector 12</option><option>Sector 13</option><option>Sector 14</option><option>Sector 15</option>
+          <option>Sector 16</option><option>Sector 17</option><option>Sector 18</option><option>Sector 19</option><option>Sector 20</option>
+          <option>Sector 21</option><option>Sector 22</option><option>Sector 23</option><option>Sector 24</option><option>Sector 25</option>
+          <option>Sector 26</option><option>Sector 27</option><option>Sector 28</option><option>Sector 29</option><option>Sector 30</option>
+          <option>Sector 75</option><option>Sector 76</option><option>Sector 77</option><option>Sector 78</option><option>Sector 79</option>
+          <option>Sector 80</option><option>Sector 81</option><option>Sector 82</option><option>Sector 83</option><option>Sector 84</option>
+          <option>Sector 85</option><option>Sector 86</option><option>Sector 87</option><option>Sector 88</option><option>Sector 89</option>
+          <option>Sector 90</option><option>Sector 91</option><option>Sector 92</option><option>Sector 93</option>
+          <option>Ballabhgarh</option><option>NIT Faridabad</option><option>Old Faridabad</option><option>Palwal</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Society / Building / Locality <span class="req">*</span></label>
+        <input type="text" id="transport-society" placeholder="e.g. Omaxe City, ATS Paradiso, Silver City">
+        <div class="hint">This helps us plan the transport route</div>
+      </div>
+      <div class="field">
+        <label>Nearest Landmark</label>
+        <input type="text" id="transport-landmark" placeholder="e.g. Near DPS School, SRS Mall gate">
+      </div>
+      <div class="field">
+        <label>Proposed Pick Up Time</label>
+        <select id="transport-time">
+          <option value="">— Select time —</option>
+          <option>4:00 PM</option>
+          <option>4:10 PM</option>
+          <option>4:20 PM</option>
+          <option>4:30 PM</option>
+          <option>4:40 PM</option>
+          <option>4:50 PM</option>
+          <option>5:00 PM</option>
+          <option>5:10 PM</option>
+          <option>5:20 PM</option>
+          <option>5:30 PM</option>
+          <option>5:40 PM</option>
+          <option>5:50 PM</option>
+          <option>6:00 PM</option>
+          <option>6:10 PM</option>
+          <option>6:20 PM</option>
+          <option>6:30 PM</option>
+          <option>6:40 PM</option>
+          <option>6:50 PM</option>
+          <option>7:00 PM</option>
+        </select>
+        <div class="hint">Final schedule confirmed by our transport team</div>
+      </div>
+    </div>
+    <div style="margin-top:8px;font-size:10px;color:#0C447C;opacity:.7">Transport availability subject to route confirmation. Our team will call to confirm.</div>
+  </div>
+
+  <!-- ══ MEMBERSHIP ══ -->
+  <div class="divider"></div>
+  <div class="sec-hdr" style="margin-bottom:12px">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
+    <div><div class="sec-nm">Membership Pack</div><div class="sec-sb" id="age-filter-note">Packs shown based on age — enter date of birth above to filter</div></div>
+  </div>
+
+  <div class="fee-box">
+    <div class="fee-ico"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg></div>
+    <div><div class="fee-t">One-Time Registration Fee</div><div class="fee-s">ID card, report card &amp; membership setup. Paid once only.</div></div>
+    <div class="fee-amt"><div class="fee-orig">₹3,000</div><div class="fee-waived">₹0 WAIVED</div><div class="fee-note">EARLY BIRD · FIRST 25</div></div>
+  </div>
+
+  <!-- Sports -->
+  <div class="field" style="margin-bottom:14px">
+    <label>Sports Chosen <span class="req">*</span></label>
+    <div class="hint" style="margin-bottom:7px">Select all sports your child wants to train in</div>
+    <div class="sport-grid">
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Football"><span class="sport-icon">⚽</span>Football</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Cricket"><span class="sport-icon">🏏</span>Cricket</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Basketball"><span class="sport-icon">🏀</span>Basketball</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Volleyball"><span class="sport-icon">🏐</span>Volleyball</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Munchkin"><span class="sport-icon">🧒</span>Munchkin</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Table Tennis"><span class="sport-icon">🏓</span>Table Tennis</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Skating"><span class="sport-icon">⛸️</span>Skating</label>
+      <label class="sport-lbl" onclick="ts(this)"><input type="checkbox" name="sports" value="Dance & Yoga"><span class="sport-icon">💃</span>Dance &amp; Yoga</label>
+    </div>
+    <div class="err-msg" id="sports-err">Please select at least one sport</div>
+  </div>
+
+  <div class="info-strip"><svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>All prices include 18% GST. Base Sessions + Bonus Sessions = Total Sessions. Credits valid for full validity window.</div>
+
+  <!-- Dynamically generated pack tiers -->
+  <div id="pack-container">
+    <!-- All packs rendered on load; DOB filters to relevant age group -->
+  </div>
+
+  <div class="err-msg" id="pack-err" style="margin-top:5px">Please select a membership pack to continue</div>
+
+  <!-- Validity Start / Until — shown when pack selected -->
+  <div id="validity-block" style="display:none;margin-top:14px;background:var(--green-lt);border:1px solid #A5D6A7;border-radius:var(--radius);padding:14px 16px">
+    <div class="sub-hdr" style="margin-top:0;border-color:#A5D6A7;color:var(--green)">📅 Membership Validity Period</div>
+    <div class="fg" style="margin-top:10px;gap:12px">
+      <div class="field">
+        <label style="color:var(--green)">Validity Start Date <span class="req">*</span></label>
+        <input type="date" id="validity-start-input" onchange="recalcValidUntil()"
+          style="border-color:#A5D6A7;background:#fff">
+        <div class="hint">Defaults to today. Change if membership starts later.</div>
+      </div>
+      <div class="field">
+        <label style="color:var(--gold2)">Valid Until <span class="opt">(auto-calculated)</span></label>
+        <input type="date" id="validity-end-input" readonly
+          style="border-color:var(--gold2);background:#FFF8E1;color:var(--gold2);font-weight:600">
+        <div class="hint" id="validity-duration-hint" style="color:var(--text2);font-weight:500"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Order summary -->
+  <div id="order-sum" style="display:none">
+    <div class="sub-hdr">Order Summary</div>
+    <div class="sum-box">
+      <div class="sum-row"><span class="sk">Pack</span><span class="sv" id="sum-pack">—</span></div>
+      <div class="sum-row"><span class="sk">Sessions</span><span class="sv" id="sum-sess">—</span></div>
+      <div class="sum-row"><span class="sk">Validity</span><span class="sv" id="sum-val">—</span></div>
+      <div class="sum-row"><span class="sk">Total (incl. 18% GST)</span><span class="sv" id="sum-price">—</span></div>
+      <div class="sum-row"><span class="sk" style="font-size:10px">Base Amount (excl. GST)</span><span class="sv tax" id="sum-base">—</span></div>
+      <div class="sum-row"><span class="sk" style="font-size:10px">GST @ 18%</span><span class="sv tax" id="sum-gst">—</span></div>
+      <div class="sum-row"><span class="sk">Registration Fee</span><span class="sv waived">₹0 — Waived (Early Bird · First 25)</span></div>
+      <div class="sum-row total"><span class="sk">Total Due</span><span class="sv" id="sum-total" style="color:var(--navy)">—</span></div>
+    </div>
+  </div>
+
+  <!-- Preferred Training Days -->
+  <div class="sub-hdr" style="margin-top:18px">Preferred Training Days</div>
+  <div class="pill-group" id="training-days-group">
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Monday"> Mon</label>
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Tuesday"> Tue</label>
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Wednesday"> Wed</label>
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Thursday"> Thu</label>
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Friday"> Fri</label>
+    <label class="pill" onclick="toggleDay(this)"><input type="checkbox" name="training-days" value="Saturday"> Sat</label>
+  </div>
+  <div class="hint" style="margin-top:4px;margin-bottom:4px">Select all days you prefer to train</div>
+
+  <!-- Preferred shift — standard + U13/U17 extra -->
+  <div class="sub-hdr" style="margin-top:14px">Preferred Training Shift</div>
+  <div class="hint" id="shift-hint" style="margin-bottom:7px;font-size:10px;display:none"></div>
+  <div class="shift-grid" id="shift-container">
+    <div style="grid-column:1/-1;color:var(--text3);font-size:11px;padding:6px">Enter date of birth above to see applicable training shifts.</div>
+  </div>
+  <div class="err-msg" id="shift-err" style="margin-top:4px">Please select a shift</div>
+
+  <!-- Referral -->
+  <div class="fg" style="margin-top:12px">
+    <div class="field">
+      <label>How did you hear about us?</label>
+      <select id="ref-src"><option value="">— Select —</option><option>School notification</option><option>WhatsApp</option><option>Instagram / Social media</option><option>RWA / Society board</option><option>Friend / Family</option><option>Gate banner</option><option>Google</option><option>Other</option></select>
+    </div>
+    <div class="field">
+      <label>Referral Member <span class="opt">(earns 3 bonus sessions)</span></label>
+      <input type="text" id="ref-name" list="member-list" placeholder="Type name to search members" autocomplete="off">
+      <datalist id="member-list">
+        <!-- Populated dynamically from MEMBERS_DB below -->
+      </datalist>
+      <div class="hint">Start typing to search registered members</div>
+    </div>
+  </div>
+</div><!-- /sec-0 -->
+
+<!-- ══════════════════════════════
+     STEP 2 — HEALTH
+══════════════════════════════ -->
+<div class="sec" id="sec-1">
+  <div class="sec-hdr">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
+    <div><div class="sec-nm">Health Information</div><div class="sec-sb">Kept confidential — coaching staff only</div></div>
+  </div>
+
+  <div class="sub-hdr" style="margin-top:0">Physical Measurements at Joining</div>
+  <div class="fg c3" style="margin-bottom:14px">
+    <div class="field"><label>Height <span class="opt">(cm)</span></label><input type="number" id="height" placeholder="e.g. 140" min="50" max="250" oninput="calcBMI()"><div class="hint">At registration</div></div>
+    <div class="field"><label>Weight <span class="opt">(kg)</span></label><input type="number" id="weight" placeholder="e.g. 35" min="5" max="200" oninput="calcBMI()"><div class="hint">At registration</div></div>
+    <div class="field"><label>BMI <span class="opt">(auto)</span></label><input type="text" id="bmi-val" readonly placeholder="—"><div id="bmi-badge" style="display:none"><span class="auto-badge" id="bmi-txt"></span></div></div>
+  </div>
+
+  <div class="sub-hdr">Medical</div>
+  <div class="field" style="margin-bottom:12px">
+    <label>Any medical condition, allergy or limitation? <span class="req">*</span></label>
+    <div class="yn-group">
+      <label class="yn-lbl" onclick="setMed(this,false)"><input type="radio" name="medical" value="No"> No</label>
+      <label class="yn-lbl" onclick="setMed(this,true)"><input type="radio" name="medical" value="Yes"> Yes — give details</label>
+    </div>
+    <div id="med-wrap"><textarea id="med-details" placeholder="Condition, medications, restrictions coaches should know…"></textarea></div>
+    <div class="err-msg" id="med-err">Please indicate</div>
+  </div>
+
+  <div class="fg">
+    <div class="field"><label>Blood Group <span class="opt">(recommended)</span></label>
+      <select id="blood"><option value="">— Unknown —</option><option>A+</option><option>A−</option><option>B+</option><option>B−</option><option>O+</option><option>O−</option><option>AB+</option><option>AB−</option></select>
+    </div>
+    <div class="field"><label>Known Allergies</label><input type="text" id="allergies" placeholder="e.g. Peanuts, Dust — or None"></div>
+    <div class="field"><label>Sport Experience</label>
+      <select id="prev-sport"><option value="">— Select —</option><option>None (beginner)</option><option>School / colony play</option><option>Trained 1–2 years</option><option>Trained 3+ years</option><option>Competitive / State</option></select>
+    </div>
+    <div class="field"><label>Recent Injury <span class="opt">(12 months)</span></label><input type="text" id="injury" placeholder="e.g. Ankle sprain — or None"></div>
+  </div>
+</div><!-- /sec-1 -->
+
+<!-- ══════════════════════════════
+     STEP 3 — CONSENT
+══════════════════════════════ -->
+<div class="sec" id="sec-2">
+  <div class="sec-hdr">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+    <div><div class="sec-nm">Consents &amp; Acknowledgements</div><div class="sec-sb">All items must be ticked</div></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:7px">
+    <label class="con-block"><input type="checkbox" id="c1"><span class="con-text"><strong>Programme Rules &amp; Attendance.</strong> I agree to the Academy's session timings, attendance policies and code of conduct. Unused credits roll forward (up to 20%) on renewal.</span></label>
+    <label class="con-block"><input type="checkbox" id="c2"><span class="con-text"><strong>Medical &amp; First Aid.</strong> All health information is accurate. I consent to trained staff administering first aid in case of injury.</span></label>
+    <label class="con-block"><input type="checkbox" id="c3"><span class="con-text"><strong>Photography &amp; Media.</strong> I consent to photos and videos being used for Academy social media, website and marketing. Withdrawable in writing.</span></label>
+    <label class="con-block"><input type="checkbox" id="c4"><span class="con-text"><strong>Data &amp; Privacy.</strong> I consent to TPA storing personal information for membership management and communication.</span></label>
+    <label class="con-block"><input type="checkbox" id="c5"><span class="con-text"><strong>Fee &amp; Refund Policy.</strong> Credits are non-refundable once used. Up to 20% roll forward on renewal. ₹3,000 Registration Fee waived for first 25 members (Early Bird).</span></label>
+  </div>
+  <div class="err-msg" id="consent-err" style="display:block;padding:7px 0;font-size:11px">Please tick all boxes to proceed</div>
+</div><!-- /sec-2 -->
+
+<!-- ══════════════════════════════
+     STEP 4 — REVIEW
+══════════════════════════════ -->
+<div class="sec" id="sec-3">
+  <div class="sec-hdr">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M9 11H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2zm2-7h-1V2h-2v2H8V2H6v2H5c-1.11 0-1.99.9-1.99 2L3 20c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11z"/></svg></div>
+    <div><div class="sec-nm">Review &amp; Proceed to Payment</div><div class="sec-sb">Check all details before paying</div></div>
+  </div>
+  <div id="review-content"></div>
+  <div style="margin-top:12px;padding:11px;background:var(--gold-lt);border:1px solid var(--gold2);border-radius:var(--radius)">
+    <div style="font-size:11px;font-weight:600;color:var(--navy);margin-bottom:3px">What happens next?</div>
+    <div style="font-size:11px;color:var(--navy2);line-height:1.7">1. Complete payment below. 2. WhatsApp confirmation within 2 hours. 3. Credits activated on payment confirmation. 4. First session from <strong>Academy Launch — 30 March 2026</strong>.</div>
+  </div>
+</div><!-- /sec-3 -->
+
+<!-- ══════════════════════════════
+     STEP 5 — PAYMENT
+══════════════════════════════ -->
+<div class="sec" id="sec-4">
+  <div class="sec-hdr">
+    <div class="sec-ico"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg></div>
+    <div><div class="sec-nm">Payment</div><div class="sec-sb">Secure payment · All prices inclusive of 18% GST</div></div>
+  </div>
+
+  <!-- Registration Fee -->
+  <div class="pay-section" id="pay-reg-section">
+    <div class="pay-title"><svg viewBox="0 0 24 24"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4z"/></svg>Part 1 — Registration Fee (One-Time)</div>
+    <!-- Original amount always shown -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+      <div>
+        <div class="pay-label">Registration Fee</div>
+        <div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:rgba(255,255,255,0.5);text-decoration:line-through;letter-spacing:2px">₹3,000</div>
+      </div>
+      <div style="text-align:right">
+        <div class="pay-label">You Pay</div>
+        <div class="pay-amount" id="pay-reg-amount" style="font-size:26px">₹3,000</div>
+        <div class="pay-breakdown" id="pay-reg-breakdown" style="margin-top:2px"></div>
+      </div>
+    </div>
+    <!-- Coupon for registration fee -->
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:10px">
+      <div class="pay-label" style="margin-bottom:8px">🎟️ Registration Fee Coupon</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="reg-coupon-input" placeholder="Enter registration coupon code"
+          style="flex:1;height:38px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:0 10px;background:rgba(255,255,255,0.08);color:#fff;font-family:'Barlow',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase"
+          oninput="this.value=this.value.toUpperCase()">
+        <button onclick="applyRegCoupon()"
+          style="background:#CCE800;color:var(--navy);border:none;border-radius:6px;padding:0 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0">
+          APPLY
+        </button>
+      </div>
+      <div id="reg-coupon-msg" style="display:none;margin-top:7px;padding:7px 10px;border-radius:5px;font-size:11px;font-weight:600"></div>
+
+    </div>
+    <!-- Status line -->
+    <div id="reg-paid-note" style="background:rgba(212,255,0,0.08);border:1px solid rgba(212,255,0,0.25);border-radius:6px;padding:10px 12px;font-size:12px;color:#CCE800;font-weight:600;text-align:center;display:none">
+      🎉 Registration Fee WAIVED — ₹3,000 saved!
+    </div>
+  </div>
+
+  <div style="height:12px"></div>
+
+  <!-- Membership Fee -->
+  <div class="pay-section">
+    <div class="pay-title"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Part 2 — Membership Fee</div>
+
+    <div class="pay-row">
+      <div class="pay-label">Pack Selected</div>
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;color:#fff;letter-spacing:1px" id="pay-pack-name">—</div>
+    </div>
+
+    <div class="pay-row">
+      <div class="pay-label">Payment Method</div>
+      <div class="pay-methods">
+        <label class="pay-method" onclick="payMethod(this,'upi')"><input type="radio" name="pay-method" value="upi"><span class="pay-method-icon">📱</span><span class="pay-method-name">UPI</span></label>
+        <label class="pay-method" onclick="payMethod(this,'debit')"><input type="radio" name="pay-method" value="debit"><span class="pay-method-icon">💳</span><span class="pay-method-name">Debit Card</span></label>
+        <label class="pay-method" onclick="payMethod(this,'credit')"><input type="radio" name="pay-method" value="credit"><span class="pay-method-icon">💎</span><span class="pay-method-name">Credit Card</span></label>
+        <label class="pay-method" onclick="payMethod(this,'netbanking')"><input type="radio" name="pay-method" value="netbanking"><span class="pay-method-icon">🏦</span><span class="pay-method-name">Net Banking</span></label>
+        <label class="pay-method" onclick="payMethod(this,'cash')"><input type="radio" name="pay-method" value="cash"><span class="pay-method-icon">💵</span><span class="pay-method-name">Cash</span></label>
+      </div>
+      <div class="cash-note" id="cash-note">💡 Cash payment: please pay at the Academy office. Your Registration ID is generated on submission. GST included in the price shown.</div>
+    </div>
+
+
+    <!-- Membership Fee Coupon -->
+    <div style="background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:6px;padding:12px;margin-bottom:2px">
+      <div class="pay-label" style="margin-bottom:8px">🎟️ Membership Discount Coupon</div>
+      <div style="display:flex;gap:8px">
+        <input type="text" id="mem-coupon-input" placeholder="Enter membership coupon code"
+          style="flex:1;height:38px;border:1px solid rgba(255,255,255,0.2);border-radius:6px;padding:0 10px;background:rgba(255,255,255,0.08);color:#fff;font-family:'Barlow',sans-serif;font-size:12px;letter-spacing:1px;text-transform:uppercase"
+          oninput="this.value=this.value.toUpperCase()">
+        <button onclick="applyMemCoupon()"
+          style="background:#CCE800;color:var(--navy);border:none;border-radius:6px;padding:0 14px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;flex-shrink:0">
+          APPLY
+        </button>
+      </div>
+      <div id="mem-coupon-msg" style="display:none;margin-top:7px;padding:7px 10px;border-radius:5px;font-size:11px;font-weight:600"></div>
+
+    </div>
+
+    <hr class="pay-divider">
+
+    <!-- Amount breakdown (changes based on method) -->
+    <div class="pay-row">
+      <div class="pay-label">Amount Breakdown</div>
+      <div class="sum-box" style="background:rgba(255,255,255,0.05);border-color:rgba(255,255,255,0.1)">
+        <div class="sum-row" style="border-color:rgba(255,255,255,0.1)"><span class="sk" style="color:rgba(255,255,255,0.45)">Pack Price (Total)</span><span class="sv" id="pay-total-shown" style="color:#fff">—</span></div>
+        <div class="sum-row" id="pay-tax-row" style="border-color:rgba(255,255,255,0.1)"><span class="sk" style="color:rgba(255,255,255,0.35);font-size:10px">Base Amount (excl. GST)</span><span class="sv" id="pay-base-shown" style="color:rgba(255,255,255,0.5);font-size:11px">—</span></div>
+        <div class="sum-row" id="pay-gst-row" style="border-color:rgba(255,255,255,0.1)"><span class="sk" style="color:rgba(255,255,255,0.35);font-size:10px">GST @ 18%</span><span class="sv" id="pay-gst-shown" style="color:rgba(255,255,255,0.5);font-size:11px">—</span></div>
+        <div class="sum-row" style="border-color:rgba(255,255,255,0.1);font-weight:600"><span class="sk" style="color:rgba(255,255,255,0.45)">You Pay Now</span><span class="sv" id="pay-final" style="color:#CCE800;font-size:15px">—</span></div>
+      </div>
+    </div>
+
+    <button class="pay-btn" id="pay-btn" onclick="initiatePayment()" disabled>
+      <svg viewBox="0 0 24 24" style="width:16px;height:16px;fill:currentColor"><path d="M11 17h2v-6h-2v6zm1-15C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zM11 9h2V7h-2v2z"/></svg>
+      Select Payment Method to Continue
+    </button>
+  </div>
+
+  <!-- Enquiry-only option -->
+  <div style="text-align:center;margin-top:14px">
+    <button onclick="submitEnquiry()" style="background:none;border:1px solid var(--border);border-radius:var(--radius);padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:600;color:var(--text2);cursor:pointer;letter-spacing:1px">
+      Submit as Enquiry (without payment)
+    </button>
+    <div class="hint" style="margin-top:4px">A Registration ID will be generated. Payment can be made at the Academy.</div>
+  </div>
+</div><!-- /sec-4 -->
+
+<!-- SUCCESS -->
+<div class="success-screen" id="success">
+  <div class="succ-icon"><svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+  <div class="succ-t" id="succ-title">Registration Submitted!</div>
+  <div class="succ-s" id="succ-sub">Welcome to Tagore Playbook Academy. We will contact you within 2 hours on WhatsApp.</div>
+  <div class="mid-box">
+    <div class="mid-label">Registration ID</div>
+    <div class="mid-val" id="mid-display">TPA-—</div>
+    <div class="mid-sub" id="mid-sub">Please save this ID for all future correspondence</div>
+  </div>
+  <div class="eb-succ" id="eb-succ-msg">🎉 Early Bird confirmed — your ₹3,000 Registration Fee is <strong>waived</strong>!</div>
+  <div class="next-steps" id="next-steps">
+    <h4>Next Steps</h4>
+    <ul id="next-list"></ul>
+  </div>
+</div>
+
+<!-- NAV -->
+<div class="form-nav" id="form-nav">
+  <button class="btn btn-back" id="btn-back" onclick="prev()" style="display:none">
+    <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>Back
+  </button>
+  <div class="step-ctr" id="step-ctr">Step 1 of 5</div>
+  <button class="btn btn-next" id="btn-next" onclick="next()">
+    Continue<svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>
+  </button>
+</div>
+
+</div><!-- /form-body -->
+</div><!-- /wrapper -->
+
+<script>
+// ═══════════════════════════════════════════
+// MEMBER DATABASE (for referral autocomplete)
+// In production: fetch from Google Sheets / Firebase
+// ═══════════════════════════════════════════
+const MEMBERS_DB = [
+  // These are sample entries — replace with real member data from your backend
+  "Arjun Sharma (TPA-2603-1001)",
+  "Priya Verma (TPA-2603-1002)",
+  "Rohit Gupta (TPA-2603-1003)",
+  "Anjali Singh (TPA-2603-1004)",
+  "Karan Mehta (TPA-2603-1005)",
+  // Add more members here or load dynamically
+];
+
+function initMemberList(){
+  const dl=document.getElementById('member-list');
+  if(!dl)return;
+  dl.innerHTML='';
+  MEMBERS_DB.forEach(m=>{const o=document.createElement('option');o.value=m;dl.appendChild(o);});
+}
+window.addEventListener('DOMContentLoaded', ()=>{
+  initMemberList();
+  renderPacks(['munchkin','u13','u17','elite','adult'], null); // show all on load
+});
+
+function toggleTransport(val){
+  const det=document.getElementById('transport-details');
+  if(det)det.style.display=(val==='Yes')?'block':'none';
+}
+
+function loadSocieties(){
+  // Hook point: fetch societies for selected sector from backend
+  // For now, just enables the text input with placeholder hint
+  const sec=document.getElementById('transport-sector')?.value;
+  const soc=document.getElementById('transport-society');
+  if(soc&&sec)soc.placeholder=`Society/building in ${sec}`;
+}
+
+// ═══════════════════════════════════════════
+// PACK DATA (from Excel)
+// ═══════════════════════════════════════════
+const PACKS = {
+  munchkin:[
+    {name:"Trial",days:5,base:5,bonus:0,total:5,val:0.5,price:750,trial:true},
+    {name:"Starter",days:3,base:39,bonus:3,total:42,val:3,price:7500},
+    {name:"Explorer",days:5,base:65,bonus:5,total:70,val:3.33,price:11500},
+    {name:"Starter",days:3,base:78,bonus:12,total:90,val:6.66,price:14000},
+    {name:"Explorer",days:5,base:130,bonus:20,total:150,val:7,price:21000},
+    {name:"Starter",days:3,base:156,bonus:30,total:186,val:14,price:25000},
+    {name:"Explorer",days:5,base:260,bonus:40,total:300,val:15,price:36000},
+  ],
+  u13:[
+    {name:"Starter",days:3,base:39,bonus:3,total:42,val:3,price:9000},
+    {name:"Explorer",days:5,base:65,bonus:5,total:70,val:3.33,price:13000},
+    {name:"Starter",days:3,base:78,bonus:12,total:90,val:6.66,price:17000},
+    {name:"Explorer",days:5,base:130,bonus:20,total:150,val:7,price:24000},
+    {name:"Starter",days:3,base:156,bonus:30,total:186,val:14,price:28000},
+    {name:"Explorer",days:5,base:260,bonus:40,total:300,val:15,price:40000},
+  ],
+  u17:[
+    {name:"Starter",days:3,base:39,bonus:3,total:42,val:3,price:10500},
+    {name:"Starter",days:3,base:78,bonus:12,total:90,val:6.5,price:20000},
+    {name:"Starter",days:3,base:156,bonus:30,total:186,val:14,price:36000},
+  ],
+  elite:[
+    {name:"Elite",days:6,base:39,bonus:0,total:78,val:3,price:21000},
+    {name:"Elite",days:6,base:156,bonus:0,total:156,val:6,price:40000},
+    {name:"Elite",days:6,base:312,bonus:0,total:312,val:12,price:75000},
+    {name:"Elite+ Weekend Morning",days:1,base:4,bonus:0,total:4,val:1,price:8000},
+  ],
+  adult:[
+    {name:"Active",days:3,base:39,bonus:3,total:42,val:3,price:10500},
+    {name:"Regular",days:3,base:78,bonus:12,total:90,val:6.5,price:20000},
+    {name:"Champions",days:3,base:156,bonus:30,total:186,val:14,price:36000},
+  ],
+};
+
+const TIER_META = {
+  munchkin:{label:'🧒 Munchkin · Age 3–7 · 60 min · Multi-sport rotation',cls:'tm',color:'#1B5E20'},
+  u13:{label:'🏃 Under-13 · Age 8–12 · 120 min · Structured coaching',cls:'tu',color:'#0C447C'},
+  u17:{label:'🏅 Under-17 · Age 13–17 · 120 min · Active training',cls:'tv',color:'#E65100'},
+  elite:{label:'🏆 13+ Champions Elite · Age 13–17 · 3 hrs/session · IDP + Competition',cls:'te',color:'#7B3F00'},
+  adult:{label:'👤 Adults · Age 18+ · 60 min · Structured sport blend',cls:'ta',color:'#4A148C'},
+};
+
+function validityLabel(v){
+  const m={0.5:"15 Days",1:"1 Month",3:"3 Months",3.33:"3 Months + 10 additional Days",
+    6:"6 Months",6.5:"6 Months + 15 additional Days",6.66:"6 Months + 20 additional Days",
+    7:"6 Months + 30 additional Days",12:"12 Months",14:"12 Months + 60 additional Days",15:"12 Months + 90 additional Days"};
+  return m[v]||`${v} Months`;
+}
+
+function fmtCur(n){return '₹'+Number(n).toLocaleString('en-IN',{maximumFractionDigits:0});}
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let step=0,STEPS=5;
+let selPack=null, selCat='', regId='', paymentMode='', isCash=false;
+
+// ═══════════════════════════════════════════
+// NAV
+// ═══════════════════════════════════════════
+function goTo(n){if(n>step)return;step=n;render();}
+function next(){
+  if(!validate(step))return;
+  if(step===2)buildReview();
+  if(step===STEPS-1){return;}// payment handles itself
+  step++;render();window.scrollTo({top:0,behavior:'smooth'});
+}
+function prev(){if(step>0){step--;render();window.scrollTo({top:0,behavior:'smooth'});}}
+
+function render(){
+  document.querySelectorAll('.sec').forEach((s,i)=>s.classList.toggle('active',i===step));
+  document.querySelectorAll('.ps').forEach((s,i)=>{
+    s.classList.toggle('active',i===step);s.classList.toggle('done',i<step);
+  });
+  document.getElementById('btn-back').style.display=step>0?'inline-flex':'none';
+  const nb=document.getElementById('btn-next');
+  if(step===STEPS-1){
+    nb.style.display='none';
+  } else if(step===STEPS-2){
+    nb.style.display='inline-flex';nb.className='btn btn-sub';
+    nb.innerHTML='Review & Pay <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
+  } else {
+    nb.style.display='inline-flex';nb.className='btn btn-next';
+    nb.innerHTML='Continue <svg viewBox="0 0 24 24" style="width:13px;height:13px;fill:currentColor"><path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
+  }
+  document.getElementById('step-ctr').textContent=`Step ${step+1} of ${STEPS}`;
+}
+
+// ═══════════════════════════════════════════
+// VALIDATION
+// ═══════════════════════════════════════════
+function validate(s){
+  let ok=true;
+  const req=id=>{
+    const e=document.getElementById(id);if(!e)return;
+    const v=e.value.trim();const f=e.closest('.field');
+    if(f)f.classList.toggle('has-error',!v);if(!v)ok=false;
+  };
+  if(s===0){
+    req('member-name');req('dob');req('address');req('parent-name');req('parent-phone');req('emergency');
+    const ri=document.getElementById('relation');
+    if(ri&&!ri.value){ri.closest('.field')?.classList.add('has-error');ok=false;}
+    else ri?.closest('.field')?.classList.remove('has-error');
+    const gok=document.querySelector('input[name="gender"]:checked');
+    document.getElementById('gender-err').style.display=gok?'none':'block';if(!gok)ok=false;
+    const sp=document.querySelectorAll('input[name="sports"]:checked');
+    document.getElementById('sports-err').style.display=sp.length?'none':'block';if(!sp.length)ok=false;
+    // Pack is optional — form can be submitted as enquiry
+    const sh=document.querySelector('input[name="shift"]:checked');
+    document.getElementById('shift-err').style.display=sh||!selPack?'none':'block';
+    if(selPack&&!sh)ok=false;
+  }
+  if(s===1){
+    const m=document.querySelector('input[name="medical"]:checked');
+    document.getElementById('med-err').style.display=m?'none':'block';if(!m)ok=false;
+  }
+  if(s===2){
+    const all=['c1','c2','c3','c4','c5'].every(id=>document.getElementById(id)?.checked);
+    document.getElementById('consent-err').style.display=all?'none':'block';if(!all)ok=false;
+  }
+  return ok;
+}
+
+// ═══════════════════════════════════════════
+// PHOTO
+// ═══════════════════════════════════════════
+function doPhoto(inp){
+  if(!inp.files||!inp.files[0])return;
+  const r=new FileReader();
+  r.onload=e=>{
+    const pv=document.getElementById('photo-preview');
+    pv.src=e.target.result;pv.style.display='block';
+    ['photo-ph','ph-lbl','ph-hint'].forEach(id=>document.getElementById(id).style.display='none');
+    document.getElementById('ph-ok').style.display='block';
+  };
+  r.readAsDataURL(inp.files[0]);
+}
+
+// ═══════════════════════════════════════════
+// AGE — auto filter packs
+// ═══════════════════════════════════════════
+function calcAge(){
+  const d=document.getElementById('dob').value;
+  if(!d)return;
+  const b=new Date(d),t=new Date();
+  let a=t.getFullYear()-b.getFullYear();
+  if(t.getMonth()<b.getMonth()||(t.getMonth()===b.getMonth()&&t.getDate()<b.getDate()))a--;
+  document.getElementById('age-display').value=a+' years';
+  let grp='',cats=[];
+  if(a>=3&&a<=7)  {grp='Munchkin (3–7)';       cats=['munchkin'];}
+  else if(a>=8&&a<=12) {grp='Under-13 (8–12)';  cats=['u13'];}
+  else if(a>=13&&a<=17){grp='Under-17 / Elite (13–17)';cats=['u17','elite'];}
+  else if(a>=18)  {grp='Adult (18+)';            cats=['adult'];}
+  const badge=document.getElementById('age-badge');
+  const grpEl=document.getElementById('age-grp');
+  if(grp){grpEl.textContent=grp;badge.style.display='block';}
+  else{badge.style.display='none';}
+  // Re-render packs filtered to this age group
+  renderPacks(cats, a);
+  // Re-render shifts filtered to this age group
+  renderShifts(cats);
+  const note=document.getElementById('age-filter-note');
+  if(note)note.textContent=grp?`Showing packs for ${grp}`:'Enter date of birth to filter packs';
+}
+
+function updateShiftVisibility(cats){
+  // kept for backwards compat — calls renderShifts
+  renderShifts(cats);
+}
+
+// Shift definitions per category
+const SHIFT_DEFS = {
+  munchkin:[{v:'5:00–6:00 PM',d:'1 hr'},{v:'6:00–7:00 PM',d:'1 hr'},{v:'7:00–8:00 PM',d:'1 hr'}],
+  u13:     [{v:'4:00–6:00 PM',d:'2 hrs'},{v:'5:00–7:00 PM',d:'2 hrs'},{v:'6:00–8:00 PM',d:'2 hrs'}],
+  u17:     [{v:'4:00–6:00 PM',d:'2 hrs'},{v:'5:00–7:00 PM',d:'2 hrs'},{v:'6:00–8:00 PM',d:'2 hrs'}],
+  elite:   [{v:'4:00–7:00 PM',d:'3 hrs'},{v:'5:00–8:00 PM',d:'3 hrs'}],
+  adult:   [{v:'5:00–6:00 PM',d:'1 hr'},{v:'6:00–7:00 PM',d:'1 hr'},{v:'7:00–8:00 PM',d:'1 hr'}],
+};
+const SHIFT_HINT = {
+  munchkin:'Munchkin · 1 hour sessions',
+  u13:'Under-13 · 2 hour sessions (120 min)',
+  u17:'Under-17 · 2 hour sessions (120 min)',
+  elite:'13+ Champions Elite · 3 hour sessions (180 min)',
+  adult:'Adults · 1 hour sessions',
+};
+
+function renderShifts(cats){
+  const container=document.getElementById('shift-container');
+  const hint=document.getElementById('shift-hint');
+  if(!container)return;
+  // Clear previous selection
+  document.querySelectorAll('input[name="shift"]').forEach(r=>{r.checked=false;});
+  document.querySelectorAll('.shift-card').forEach(card=>card.classList.remove('ck'));
+  if(!cats||!cats.length){
+    container.innerHTML='<div style="grid-column:1/-1;color:var(--text3);font-size:11px;padding:6px">Enter date of birth above to see applicable training shifts.</div>';
+    if(hint)hint.textContent='';
+    return;
+  }
+  // Collect unique shifts from all active categories (no duplicates)
+  let shifts=[],labels=[];
+  cats.forEach(cat=>{
+    if(SHIFT_DEFS[cat]){
+      SHIFT_DEFS[cat].forEach(s=>{if(!shifts.find(x=>x.v===s.v))shifts.push({...s,cat});});
+    }
+    if(SHIFT_HINT[cat]&&!labels.includes(SHIFT_HINT[cat]))labels.push(SHIFT_HINT[cat]);
+  });
+  if(hint){hint.textContent=labels.join(' · ');hint.style.color='#0C447C';hint.style.fontWeight='600';hint.style.display='block';}
+  container.innerHTML=shifts.map(s=>`
+    <label class="shift-card" onclick="sshift(this)">
+      <input type="radio" name="shift" value="${s.v}">
+      <div class="sh-t">${s.v}</div>
+      <div class="sh-s">${s.d}</div>
+    </label>`).join('');
+}
+
+function renderPacks(cats,age){
+  const container=document.getElementById('pack-container');
+  const allCats=['munchkin','u13','u17','elite','adult'];
+  const showAll=!age; // if no age, show all
+  const activeCats=cats||allCats;
+  let html='';
+  allCats.forEach(cat=>{
+    const meta=TIER_META[cat];
+    const packs=PACKS[cat];
+    const isActive=activeCats.includes(cat);
+    const dimStyle=showAll||isActive?'':'opacity:0.35;pointer-events:none';
+    const showCls=showAll||isActive?'show':'show'; // always render, control via style
+    html+=`<div class="tier ${meta.cls} ${showCls}" id="tier-${cat}" style="${dimStyle}">`;
+    html+=`<div class="tier-hdr">${meta.label}</div>`;
+    // Separate starter/explorer for two-row display (not elite/adult)
+    if(cat==='elite'||cat==='adult'||cat==='u17'){
+      html+=`<div class="pack-grid">`;
+      packs.forEach((p,i)=>html+=packCard(cat,i,p));
+      html+=`</div>`;
+    } else if(cat==='munchkin'){
+      // Munchkin: trial alone on its own row, then Starter row, then Explorer row
+      const trial=packs.filter(p=>p.trial);
+      const starters=packs.filter(p=>!p.trial&&p.days<=3);
+      const explorers=packs.filter(p=>!p.trial&&p.days>3);
+      if(trial.length){html+=`<div style="margin-bottom:8px">`;trial.forEach((p,i)=>html+=packCard(cat,packs.indexOf(p),p));html+=`</div>`;}
+      if(starters.length){html+=`<div class="pack-grid">`;starters.forEach((p,i)=>html+=packCard(cat,packs.indexOf(p),p));html+=`</div>`;}
+      if(explorers.length){html+=`<div class="pack-grid" style="margin-top:8px">`;explorers.forEach((p,i)=>html+=packCard(cat,packs.indexOf(p),p));html+=`</div>`;}
+    } else {
+      // Generic two-row: row1 = fewer sessions (3d/wk), row2 = more sessions (5d/wk)
+      const row1=packs.filter(p=>p.days<=3);
+      const row2=packs.filter(p=>p.days>3);
+      if(row1.length){html+=`<div class="pack-grid">`;row1.forEach((p,i)=>html+=packCard(cat,packs.indexOf(p),p));html+=`</div>`;}
+      if(row2.length){html+=`<div class="pack-grid" style="margin-top:8px">`;row2.forEach((p,i)=>html+=packCard(cat,packs.indexOf(p),p));html+=`</div>`;}
+    }
+    html+=`</div>`;
+  });
+  container.innerHTML=html;
+  // Reattach events
+  document.querySelectorAll('.pack-card').forEach(card=>{
+    card.querySelector('input').addEventListener('change',function(){
+      if(this.checked)selectPack(card);
+    });
+  });
+}
+
+function packCard(cat,i,p){
+  const vid=`pack-${cat}-${i}`;
+  // Validity — split months and extra days
+  const vm={0.5:'15 Days',1:'1 Month',3:'3 Months',3.33:'3 Months',6:'6 Months',6.5:'6 Months',6.66:'6 Months',7:'6 Months',12:'12 Months',14:'12 Months',15:'12 Months'};
+  const ve={3.33:'+10 additional Days',6.5:'+15 additional Days',6.66:'+20 additional Days',7:'+30 additional Days',14:'+60 additional Days',15:'+90 additional Days'};
+  const valBase=vm[p.val]||validityLabel(p.val);
+  const valExtra=ve[p.val]||'';
+  // Sessions with highlighting
+  const sessStr=p.bonus>0
+    ?`<span class="sess-base">${p.base} Base</span> + <span class="sess-bonus">+${p.bonus} Bonus</span> = <strong class="sess-total">${p.total} Total</strong>`
+    :`<strong class="sess-total">${p.total} Sessions</strong>`;
+  return `
+  <label class="pack-card" id="pc-${vid}">
+    <input type="radio" name="pack" id="${vid}" data-cat="${cat}" data-idx="${i}">
+    <div class="ph"><span class="pn">${p.name}</span></div>
+    <div class="pval-block">
+      <span class="pval-months">${valBase}</span>
+      ${valExtra?`<span class="pval-extra">${valExtra}</span>`:''}
+    </div>
+    <div class="pp">${fmtCur(p.price)}</div>
+    <div class="ps2">${sessStr}</div>
+    <div class="pd">${p.days}d/wk${p.trial?' · No-commitment entry':''}</div>
+  </label>`;
+}
+
+function selectPack(card){
+  document.querySelectorAll('.pack-card').forEach(c=>c.classList.remove('ck'));
+  card.classList.add('ck');
+  const inp=card.querySelector('input');
+  const cat=inp.dataset.cat,idx=parseInt(inp.dataset.idx);
+  selPack=PACKS[cat][idx];selCat=cat;
+  updateOrderSummary();
+  updatePaymentSection();
+}
+
+function updateOrderSummary(){
+  if(!selPack){document.getElementById('order-sum').style.display='none';return;}
+  const p=selPack;
+  const base=Math.round(p.price/1.18);
+  const gst=p.price-base;
+  const sessStr=p.bonus>0?`${p.base} Base + ${p.bonus} Bonus = ${p.total} Total`:`${p.total} Sessions`;
+  document.getElementById('order-sum').style.display='block';
+  document.getElementById('sum-pack').textContent=`${p.name} · ${validityLabel(p.val)}`;
+  document.getElementById('sum-sess').textContent=sessStr;
+  document.getElementById('sum-val').textContent=validityLabel(p.val);
+  document.getElementById('sum-price').textContent=fmtCur(p.price)+' (incl. GST)';
+  document.getElementById('sum-base').textContent=fmtCur(base);
+  document.getElementById('sum-gst').textContent=fmtCur(gst);
+  document.getElementById('sum-total').textContent=fmtCur(p.price)+' + ₹0 (Reg. Fee waived)';
+}
+
+// ═══════════════════════════════════════════
+// BMI
+// ═══════════════════════════════════════════
+function calcBMI(){
+  const h=parseFloat(document.getElementById('height')?.value);
+  const w=parseFloat(document.getElementById('weight')?.value);
+  const bv=document.getElementById('bmi-val'),bb=document.getElementById('bmi-badge'),bt=document.getElementById('bmi-txt');
+  if(h>0&&w>0){
+    const bmi=w/((h/100)**2);bv.value=bmi.toFixed(1);
+    const cat=bmi<18.5?'Underweight':bmi<25?'Healthy':bmi<30?'Overweight':'Obese';
+    bt.textContent=`${bmi.toFixed(1)} — ${cat}`;bb.style.display='block';
+  }else{bv.value='';bb.style.display='none';}
+}
+
+// ═══════════════════════════════════════════
+// HELPERS
+// ═══════════════════════════════════════════
+function pl(el,grp){
+  document.querySelectorAll(`input[name="${grp}"]`).forEach(r=>r.closest('.pill')?.classList.remove('ck'));
+  el.classList.add('ck');
+}
+function ts(el){el.classList.toggle('ck',el.querySelector('input').checked);}
+function sshift(el){document.querySelectorAll('.shift-card').forEach(c=>c.classList.remove('ck'));el.classList.add('ck');}
+function toggleDay(el){el.classList.toggle('ck',el.querySelector('input').checked);}
+function setMed(el,show){
+  document.querySelectorAll('input[name="medical"]').forEach(r=>r.closest('.yn-lbl')?.classList.remove('ck'));
+  el.classList.add('ck');document.getElementById('med-wrap').style.display=show?'block':'none';
+}
+function g(id){const e=document.getElementById(id);return e?e.value.trim():'';}
+
+// ═══════════════════════════════════════════
+// PAYMENT SECTION
+// ═══════════════════════════════════════════
+function updatePaymentSection(){
+  if(!selPack){
+    document.getElementById('pay-pack-name').textContent='No pack selected — Enquiry only';
+    return;
+  }
+  const p=selPack;
+  document.getElementById('pay-pack-name').textContent=`${p.name} · ${validityLabel(p.val)}`;
+  const base=Math.round(p.price/1.18),gst=p.price-base;
+  document.getElementById('pay-total-shown').textContent=fmtCur(p.price);
+  document.getElementById('pay-base-shown').textContent=fmtCur(base)+' (base)';
+  document.getElementById('pay-gst-shown').textContent=fmtCur(gst)+' (18% GST)';
+  document.getElementById('pay-final').textContent=isCash?fmtCur(p.price)+' (cash, no tax calc)':fmtCur(p.price);
+}
+
+function payMethod(el,method){
+  document.querySelectorAll('.pay-method').forEach(m=>m.classList.remove('ck'));
+  el.classList.add('ck');
+  paymentMode=method;isCash=(method==='cash');
+  const cashNote=document.getElementById('cash-note');
+  cashNote.style.display=isCash?'block':'none';
+  const taxRow=document.getElementById('pay-tax-row');
+  const gstRow=document.getElementById('pay-gst-row');
+  // GST always shown for all methods including cash
+  if(taxRow)taxRow.style.display='flex';
+  if(gstRow)gstRow.style.display='flex';
+  if(selPack)document.getElementById('pay-final').textContent=fmtCur(getEffectivePrice())+(isCash?' (collect at office)':'');
+  const btn=document.getElementById('pay-btn');
+  btn.disabled=false;
+  refreshAllAmounts();
+  btn.innerHTML=isCash
+    ?`<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Submit — Pay ₹${getEffectivePrice().toLocaleString('en-IN')} at Academy Office`
+    :`<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Pay ₹${getEffectivePrice().toLocaleString('en-IN')} via ${method.toUpperCase()}`;
+}
+
+function initiatePayment(){
+  regId=generateID();
+  if(isCash||!selPack){
+    showSuccess('cash');
+  } else {
+    // Razorpay integration point
+    launchRazorpay();
+  }
+}
+
+function submitEnquiry(){
+  regId=generateID();
+  showSuccess('enquiry');
+}
+
+function launchRazorpay(){
+  // ── RAZORPAY INTEGRATION ──
+  // To go live, replace with your actual Razorpay Key ID from https://dashboard.razorpay.com
+  // and set up an order via your backend (Node.js/PHP) calling Razorpay Orders API.
+  // For testing, this uses the test key pattern.
+  const amount=selPack?getEffectivePrice()*100:0; // Razorpay takes paise (after discount)
+  const opts={
+    key:"rzp_test_REPLACE_WITH_YOUR_KEY", // <-- Replace with your Razorpay Key ID
+    amount:amount,
+    currency:"INR",
+    name:"Tagore Playbook Academy",
+    description:selPack?`${selPack.name} · ${validityLabel(selPack.val)}`:"Membership",
+    image:"https://playbookpartnerz.com/logo.png",
+    prefill:{
+      name:g('member-name'),
+      email:g('email'),
+      contact:g('parent-phone')
+    },
+    notes:{
+      registration_id:regId,
+      member_name:g('member-name'),
+      pack:selPack?selPack.name:'',
+    },
+    theme:{color:"#0A1628"},
+    handler:function(response){
+      // Payment success callback
+      showSuccess('online',response.razorpay_payment_id);
+    },
+    modal:{ondismiss:function(){
+      alert('Payment was cancelled. You can try again or submit as enquiry.');
+    }}
+  };
+  // Check if Razorpay SDK is loaded
+  if(typeof Razorpay!=='undefined'){
+    const rzp=new Razorpay(opts);rzp.open();
+  } else {
+    // SDK not loaded — show instructions
+    showRazorpayNote();
+  }
+}
+
+function showRazorpayNote(){
+  // Razorpay SDK not loaded. Auto-fallback to enquiry flow.
+  const msg=document.createElement('div');
+  msg.style.cssText='background:#FFF3E0;border:1px solid #FFB300;border-radius:6px;padding:10px 12px;margin-top:8px;font-size:11px;color:#E65100';
+  msg.innerHTML='<strong>Razorpay not configured yet.</strong> To enable: Add your Key ID in the JS (replace rzp_test_REPLACE_WITH_YOUR_KEY) and uncomment the Razorpay script tag at the bottom of this file. Submitting as enquiry — pay at Academy office.';
+  document.getElementById('pay-btn').insertAdjacentElement('afterend',msg);
+  setTimeout(()=>submitEnquiry(),1500);
+}
+
+function generateID(){
+  const yr=new Date().getFullYear().toString().slice(-2);
+  const mo=String(new Date().getMonth()+1).padStart(2,'0');
+  const rand=Math.floor(1000+Math.random()*9000);
+  return `TPA-${yr}${mo}-${rand}`;
+}
+
+function showSuccess(type, paymentId=''){
+  document.querySelectorAll('.sec').forEach(s=>s.style.display='none');
+  document.getElementById('form-nav').style.display='none';
+  document.getElementById('success').style.display='block';
+  document.getElementById('mid-display').textContent=regId;
+  const titles={
+    online:'Payment Confirmed!',cash:'Registration Submitted!',enquiry:'Enquiry Submitted!'
+  };
+  const subs={
+    online:'Payment received. Your membership credits will be activated within 2 hours.',
+    cash:'Your registration is recorded. Please visit the Academy office to complete payment.',
+    enquiry:'Your enquiry is recorded. Our team will contact you within 2 hours on WhatsApp.'
+  };
+  document.getElementById('succ-title').textContent=titles[type]||'Submitted!';
+  document.getElementById('succ-sub').textContent=subs[type]||'';
+  if(paymentId)document.getElementById('mid-sub').textContent=`Payment ID: ${paymentId}`;
+  const steps={
+    online:['WhatsApp confirmation within <strong>2 hours</strong>','Credits activated — your pack is live','First session from <strong>30 March 2026</strong>'],
+    cash:['Visit Academy office to pay: <strong>9990906869</strong>','Credits activated on payment','Bring this Registration ID: <strong>'+regId+'</strong>'],
+    enquiry:['Our team will call within <strong>2 hours</strong>','Select and pay for your pack at the Academy','Keep Reference ID: <strong>'+regId+'</strong>']
+  };
+  document.getElementById('next-list').innerHTML=(steps[type]||[]).map(s=>`<li>${s}</li>`).join('');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+// ═══════════════════════════════════════════
+// REVIEW
+// ═══════════════════════════════════════════
+function buildReview(){
+  const gender=document.querySelector('input[name="gender"]:checked');
+  const sports=Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(c=>c.value).join(', ');
+  const shift=document.querySelector('input[name="shift"]:checked');
+  const med=document.querySelector('input[name="medical"]:checked');
+  const transport=document.querySelector('input[name="transport"]:checked');
+  const photoAdded=document.getElementById('photo-preview').style.display==='block';
+  const rc=document.getElementById('review-content');
+
+  const packInfo=selPack?`${selPack.name} · ${validityLabel(selPack.val)} · ${fmtCur(selPack.price)}`:'No pack selected (Enquiry)';
+  const sessInfo=selPack?(selPack.bonus>0?`${selPack.base} Base + ${selPack.bonus} Bonus = ${selPack.total} Total`:`${selPack.total} Sessions`):'—';
+  const taxInfo=selPack?`Base: ${fmtCur(Math.round(selPack.price/1.18))} + GST: ${fmtCur(selPack.price-Math.round(selPack.price/1.18))} = ${fmtCur(selPack.price)}`:'—';
+
+  rc.innerHTML=`
+    <div class="rev-sec"><div class="rev-hdr">Member</div>
+      <div class="rev-row"><span class="rk">Full Name</span><span class="rv">${g('member-name')}</span></div>
+      <div class="rev-row"><span class="rk">DOB / Age</span><span class="rv">${g('dob')} · ${g('age-display')} — ${document.getElementById('age-grp').textContent||'—'}</span></div>
+      <div class="rev-row"><span class="rk">Gender</span><span class="rv">${gender?gender.value:'—'}</span></div>
+      <div class="rev-row"><span class="rk">School / Institution</span><span class="rv">${g('school')||'—'}</span></div>
+      <div class="rev-row"><span class="rk">Address</span><span class="rv">${g('address')}, ${g('sector')}, ${g('city')}</span></div>
+      <div class="rev-row"><span class="rk">Transport</span><span class="rv">${transport?transport.value:'Not specified'}</span></div>
+      <div class="rev-row"><span class="rk">Photo</span><span class="rv">${photoAdded?'✓ Uploaded':'Not uploaded'}</span></div>
+    </div>
+    <div class="rev-sec"><div class="rev-hdr">Parent / Guardian</div>
+      <div class="rev-row"><span class="rk">Name &amp; Relation</span><span class="rv">${g('parent-name')} (${g('relation')})</span></div>
+      <div class="rev-row"><span class="rk">WhatsApp</span><span class="rv">${g('parent-phone')}</span></div>
+      <div class="rev-row"><span class="rk">Emergency</span><span class="rv">${g('emergency')}</span></div>
+    </div>
+    <div class="rev-sec"><div class="rev-hdr">Membership</div>
+      <div class="rev-row"><span class="rk">Sports</span><span class="rv">${sports||'—'}</span></div>
+      <div class="rev-row"><span class="rk">Pack Selected</span><span class="rv">${packInfo}</span></div>
+      <div class="rev-row"><span class="rk">Sessions</span><span class="rv">${sessInfo}</span></div>
+      <div class="rev-row"><span class="rk">Validity</span><span class="rv">${selPack?validityLabel(selPack.val):'—'}</span></div>
+      <div class="rev-row"><span class="rk">Valid From</span><span class="rv" style="color:var(--green)">${(()=>{const v=document.getElementById('validity-start-input')?.value;return v?new Date(v).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—'})()}</span></div>
+      <div class="rev-row"><span class="rk">Valid Until</span><span class="rv" style="color:var(--gold2)">${(()=>{const v=document.getElementById('validity-end-input')?.value;return v?new Date(v).toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'}):'—'})()}</span></div>
+      <div class="rev-row"><span class="rk">Tax Breakdown</span><span class="rv" style="font-size:11px">${taxInfo}</span></div>
+      <div class="rev-row"><span class="rk">Registration Fee</span><span class="rv" style="color:var(--green);font-weight:600">₹0 — Waived (Early Bird · First 25)</span></div>
+      <div class="rev-row"><span class="rk">Training Days</span><span class="rv">${Array.from(document.querySelectorAll('input[name=\"training-days\"]:checked')).map(x=>x.value).join(', ')||'—'}</span></div>
+      <div class="rev-row"><span class="rk">Training Shift</span><span class="rv">${shift?shift.value:'—'}</span></div>
+    </div>
+    <div class="rev-sec"><div class="rev-hdr">Health</div>
+      <div class="rev-row"><span class="rk">Height / Weight</span><span class="rv">${g('height')?g('height')+' cm':'—'} / ${g('weight')?g('weight')+' kg':'—'}</span></div>
+      <div class="rev-row"><span class="rk">BMI</span><span class="rv">${g('bmi-val')||'—'}</span></div>
+      <div class="rev-row"><span class="rk">Medical</span><span class="rv">${med?med.value:'—'}</span></div>
+      <div class="rev-row"><span class="rk">Blood Group</span><span class="rv">${g('blood')||'Unknown'}</span></div>
+    </div>`;
+
+  // Also update payment section
+  updatePaymentSection();
+  document.getElementById('pay-pack-name').textContent=selPack?`${selPack.name} · ${validityLabel(selPack.val)}`:'No pack — Enquiry only';
+  if(selPack){
+    const base=Math.round(selPack.price/1.18),gst=selPack.price-base;
+    document.getElementById('pay-total-shown').textContent=fmtCur(selPack.price);
+    document.getElementById('pay-base-shown').textContent=fmtCur(base)+' (base excl. GST)';
+    document.getElementById('pay-gst-shown').textContent=fmtCur(gst)+' (18% GST)';
+    document.getElementById('pay-final').textContent=fmtCur(selPack.price);
+  }
+}
+</script>
+
+<!-- ══════════════════════════════════════════════════
+  HOW TO MAKE THIS FORM LIVE — Information Panel
+══════════════════════════════════════════════════ -->
+<!-- This block can be removed before going live -->
+<div style="max-width:820px;margin:24px auto 0;background:#fff;border-radius:var(--radius-lg);border:2px solid #FFD54F;padding:20px 24px">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#E65100;letter-spacing:1px;margin-bottom:12px">
+    ℹ️ DEVELOPER NOTES — Read Before Going Live
+  </div>
+
+  <div style="font-size:12px;color:#4A5C72;line-height:1.7">
+    <strong style="color:#1A2535">Q: Where is data saved?</strong><br>
+    Currently <strong>nowhere</strong>. This is a standalone HTML file. On submit it only generates a local Reference ID in the browser. No data is stored or sent anywhere.
+    <br><br>
+    <strong style="color:#1A2535">Q: Is this form live?</strong><br>
+    Not yet. It is a static HTML file. It needs a backend to become live.
+    <br><br>
+    <strong style="color:#1A2535">Q: How to make it live — 3 options:</strong>
+
+    <div style="background:#F8F9FA;border-radius:6px;padding:12px 14px;margin:10px 0">
+      <strong style="color:#0C447C">Option A — Simplest: Google Forms + Sheets</strong><br>
+      Use Google Forms for data collection. Free, no coding needed. Data auto-saves to Google Sheets. Limitation: cannot match this form's design.
+    </div>
+
+    <div style="background:#F8F9FA;border-radius:6px;padding:12px 14px;margin:10px 0">
+      <strong style="color:#1B5E20">Option B — Recommended: Google Sheets backend (minimal code)</strong><br>
+      1. Create a Google Sheet for registrations.<br>
+      2. Go to Extensions → Apps Script → deploy as Web App.<br>
+      3. Use this endpoint URL in the form's submit function (replace the <code>submitEnquiry()</code> call).<br>
+      4. Host the HTML file on GitHub Pages (free) or any web host.<br>
+      5. Total cost: ₹0. Setup time: ~2 hours.
+    </div>
+
+    <div style="background:#F8F9FA;border-radius:6px;padding:12px 14px;margin:10px 0">
+      <strong style="color:#4A148C">Option C — Full stack (recommended for scale)</strong><br>
+      Backend: Node.js + Express or Firebase.<br>
+      Database: Firestore (Firebase) or MongoDB Atlas — free tier sufficient for first 1,000 members.<br>
+      Hosting: Netlify / Vercel (free tier).<br>
+      This gives you a full dashboard, SMS triggers, auto WhatsApp messages (via Wati/Interakt).
+    </div>
+
+    <strong style="color:#1A2535">Q: Payment Gateway — Razorpay</strong><br>
+    Razorpay is pre-wired in this form. To activate:<br>
+    1. Sign up at <code>dashboard.razorpay.com</code> (Indian company, instant KYC).<br>
+    2. Get your Key ID from Settings → API Keys.<br>
+    3. Replace <code>rzp_test_REPLACE_WITH_YOUR_KEY</code> in the JS with your live key.<br>
+    4. Add the Razorpay checkout script: <code>&lt;script src="https://checkout.razorpay.com/v1/checkout.js"&gt;&lt;/script&gt;</code><br>
+    5. For production, create orders server-side (required by Razorpay for security).<br>
+    Razorpay fees: 2% per transaction (no setup cost, no monthly fee). Settlement next business day.
+  </div>
+</div>
+
+<!-- ════ RAZORPAY — uncomment the line below after adding your key ════
+     Get your Key ID from: https://dashboard.razorpay.com/app/keys
+     Replace rzp_test_REPLACE_WITH_YOUR_KEY in the launchRazorpay() function
+     ═════════════════════════════════════════════════════════════════════ -->
+<!-- <script src="https://checkout.razorpay.com/v1/checkout.js">
+
+// ═══════════════════════════════════════════════════════
+// VALIDITY DATE CALCULATION
+// ═══════════════════════════════════════════════════════
+const V_MONTHS = {0.5:0, 1:1, 3:3, 3.33:3, 6:6, 6.5:6, 6.66:6, 7:6, 12:12, 14:12, 15:12};
+const V_DAYS   = {0.5:15, 3.33:10, 6.5:15, 6.66:20, 7:30, 14:60, 15:90};
+
+function calcValidityDates(val){
+  const today = new Date();
+  const end   = new Date(today);
+  end.setMonth(end.getMonth() + (V_MONTHS[val] || Math.floor(val)));
+  end.setDate(end.getDate()  + (V_DAYS[val]   || 0));
+  const fmt = d => d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  return { start: fmt(today), end: fmt(end) };
+}
+
+// Patch updateOrderSummary to also show validity block + date inputs
+const _uos_orig = updateOrderSummary;
+function updateOrderSummary(){
+  _uos_orig();
+  if(!selPack) return;
+  // Show validity block
+  const vb = document.getElementById('validity-block');
+  if(vb) vb.style.display = 'block';
+  // Set default start date = today
+  const startInp = document.getElementById('validity-start-input');
+  const endInp   = document.getElementById('validity-end-input');
+  if(startInp && !startInp.value){
+    const today = new Date();
+    startInp.value = today.toISOString().split('T')[0];
+  }
+  recalcValidUntil();
+}
+
+function recalcValidUntil(){
+  if(!selPack) return;
+  const startInp = document.getElementById('validity-start-input');
+  const endInp   = document.getElementById('validity-end-input');
+  const hintEl   = document.getElementById('validity-duration-hint');
+  if(!startInp || !endInp) return;
+  const startVal = startInp.value;
+  if(!startVal) return;
+  const start = new Date(startVal);
+  const end   = new Date(startVal);
+  end.setMonth(end.getMonth() + (V_MONTHS[selPack.val] || Math.floor(selPack.val)));
+  end.setDate(end.getDate()  + (V_DAYS[selPack.val]   || 0));
+  endInp.value = end.toISOString().split('T')[0];
+  const fmt = d => d.toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
+  if(hintEl) hintEl.textContent = `${fmt(start)}  →  ${fmt(end)}  ·  ${validityLabel(selPack.val)}`;
+}
+
+// ═══════════════════════════════════════════════════════
+// COUPON CODES
+// ═══════════════════════════════════════════════════════
+
+// ═══════════════════════════════════════════════════════
+// COUPON LOGIC — split into reg fee and membership
+// ═══════════════════════════════════════════════════════
+let regCouponApplied = null;
+let memCouponApplied = null;
+Object.defineProperty(window,'appliedCoupon',{
+  get(){ return memCouponApplied; },
+  set(v){ memCouponApplied=v; }
+});
+
+function getEffectivePrice(){
+  if(!selPack) return 0;
+  const disc = (memCouponApplied && memCouponApplied.type==='mem') ? memCouponApplied.discount : 0;
+  return Math.max(0, selPack.price - disc);
+}
+
+function showPayMsg(elId, type, text){
+  const el = document.getElementById(elId);
+  if(!el) return;
+  const styles = {
+    ok:  'background:rgba(27,94,32,0.35);color:#CCE800;border:1px solid rgba(165,214,167,0.4)',
+    warn:'background:rgba(230,81,0,0.25);color:#FFB74D;border:1px solid rgba(255,204,128,0.3)',
+    err: 'background:rgba(183,28,28,0.3);color:#EF9A9A;border:1px solid rgba(239,154,154,0.3)',
+  };
+  el.style.cssText=(styles[type]||styles.err)+';display:block;padding:7px 10px;border-radius:5px;font-size:11px;font-weight:600';
+  el.textContent=text;
+}
+
+function applyRegCoupon(){
+  const code=(document.getElementById('reg-coupon-input')?.value||'').trim().toUpperCase();
+  if(!code){showPayMsg('reg-coupon-msg','err','Please enter a coupon code.');return;}
+  const cp=COUPONS[code];
+  if(!cp||cp.type!=='reg'){
+    showPayMsg('reg-coupon-msg','err',`❌ "${code}" is not a valid registration fee coupon.`);
+    regCouponApplied=null;updateRegFeeDisplay();return;
+  }
+  regCouponApplied={...cp,code};
+  showPayMsg('reg-coupon-msg','ok',`✓ "${code}" applied — Registration Fee waived! Saving ₹3,000`);
+  updateRegFeeDisplay();
+}
+
+function updateRegFeeDisplay(){
+  const amtEl=document.getElementById('pay-reg-amount');
+  const brkEl=document.getElementById('pay-reg-breakdown');
+  const noteEl=document.getElementById('reg-paid-note');
+  if(regCouponApplied){
+    if(amtEl){amtEl.textContent='₹0';amtEl.style.color='#CCE800';}
+    if(brkEl){brkEl.textContent=`${regCouponApplied.code} — ₹3,000 saved`;brkEl.style.color='rgba(204,232,0,0.7)';}
+    if(noteEl)noteEl.style.display='block';
+  } else {
+    if(amtEl){amtEl.textContent='₹3,000';amtEl.style.color='#fff';}
+    if(brkEl)brkEl.textContent='';
+    if(noteEl)noteEl.style.display='none';
+  }
+}
+
+function applyMemCoupon(){
+  const code=(document.getElementById('mem-coupon-input')?.value||'').trim().toUpperCase();
+  if(!code){showPayMsg('mem-coupon-msg','err','Please enter a coupon code.');return;}
+  const cp=COUPONS[code];
+  if(!cp||cp.type!=='mem'){
+    showPayMsg('mem-coupon-msg','err',`❌ "${code}" is not a valid membership discount coupon.`);
+    memCouponApplied=null;refreshAllAmounts();return;
+  }
+  if(selPack){
+    if(selPack.val<(cp.minVal||0)||selPack.val>(cp.maxVal||99)){
+      showPayMsg('mem-coupon-msg','warn',`⚠️ "${code}" is not valid for this plan duration. ${cp.desc}`);
+      memCouponApplied=null;refreshAllAmounts();return;
+    }
+  } else {
+    showPayMsg('mem-coupon-msg','warn','⚠️ Please select a membership pack first.');return;
+  }
+  memCouponApplied={...cp,code};
+  showPayMsg('mem-coupon-msg','ok',`✓ "${code}" applied — ${cp.desc} · Saving ₹${cp.discount.toLocaleString('en-IN')}`);
+  refreshAllAmounts();
+}
+
+function refreshAllAmounts(){
+  if(!selPack)return;
+  const finalP=getEffectivePrice();
+  const base=Math.round(finalP/1.18);
+  const gst=finalP-base;
+  const discStr=memCouponApplied?` (−₹${memCouponApplied.discount.toLocaleString('en-IN')} coupon)`:'';
+  const st=document.getElementById('sum-total');
+  if(st)st.textContent=`₹${finalP.toLocaleString('en-IN')}${discStr} + ₹0 Reg. Fee`;
+  const pt=document.getElementById('pay-total-shown');
+  const pb=document.getElementById('pay-base-shown');
+  const pg=document.getElementById('pay-gst-shown');
+  const pf=document.getElementById('pay-final');
+  if(pt)pt.textContent=`₹${selPack.price.toLocaleString('en-IN')}`+(memCouponApplied?` − ₹${memCouponApplied.discount.toLocaleString('en-IN')} discount`:'');
+  if(pb)pb.textContent=`₹${base.toLocaleString('en-IN')} (base excl. GST)`;
+  if(pg)pg.textContent=`₹${gst.toLocaleString('en-IN')} (18% GST)`;
+  const suffix=isCash?' (collect at office)':'';
+  if(pf)pf.textContent=`₹${finalP.toLocaleString('en-IN')}${suffix}`;
+  const btn=document.getElementById('pay-btn');
+  if(btn&&paymentMode){
+    btn.innerHTML=isCash
+      ?`<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>Submit — Pay ₹${finalP.toLocaleString('en-IN')} at Academy Office`
+      :`<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Pay ₹${finalP.toLocaleString('en-IN')} via ${paymentMode.toUpperCase()}`;
+  }
+}
+
+// Legacy shims
+function applyCoupon(){applyMemCoupon();}
+function refreshDiscounts(){refreshAllAmounts();}
+
+const COUPONS = {
+  // ── Registration Fee coupons (waive ₹3,000 reg fee) ──
+  'REGFREE':  {type:'reg', desc:'Registration Fee Waived (₹3,000)', discount:3000},
+  'TPAOPEN':  {type:'reg', desc:'Launch Special — Registration Fee Waived', discount:3000},
+  'FOUNDER25':{type:'reg', desc:'Founder Member — Registration Free', discount:3000},
+  // ── Membership discount coupons ──
+  // 3-month plans (val = 3 or 3.33)
+  'PLAY500':  {type:'mem', desc:'₹500 off — 3-month plans', discount:500,  minVal:2,  maxVal:4},
+  'SPORT500': {type:'mem', desc:'₹500 off — 3-month plans', discount:500,  minVal:2,  maxVal:4},
+  // 6-month plans (val = 6, 6.5, 6.66, 7)
+  'PLAY1000': {type:'mem', desc:'₹1,000 off — 6-month plans', discount:1000, minVal:5,  maxVal:8},
+  'SPORT1000':{type:'mem', desc:'₹1,000 off — 6-month plans', discount:1000, minVal:5,  maxVal:8},
+  // Annual / long plans (val = 12, 14, 15)
+  'PLAY2000': {type:'mem', desc:'₹2,000 off — Annual plans', discount:2000, minVal:11, maxVal:99},
+  'ANNUAL2K': {type:'mem', desc:'₹2,000 off — Annual plans', discount:2000, minVal:11, maxVal:99},
+  // Universal (any plan)
+  'COACH500': {type:'mem', desc:'Coach referral — ₹500 off any plan', discount:500,  minVal:0,  maxVal:99},
+  'LAUNCH25': {type:'mem', desc:'Launch special — ₹500 off any plan', discount:500,  minVal:0,  maxVal:99},
+};
+
+let appliedCoupon = null;
+
+function applyCoupon(){
+  const inp = document.getElementById('coupon-input');
+  const msg = document.getElementById('coupon-msg');
+  if(!inp||!msg) return;
+  const code = inp.value.trim().toUpperCase();
+  if(!code){ showCouponMsg('error','Please enter a coupon code.'); return; }
+  const cp = COUPONS[code];
+  if(!cp){ showCouponMsg('error',`❌ "${code}" is not a valid coupon code.`); appliedCoupon=null; refreshDiscounts(); return; }
+  // Validate membership coupon against selected pack
+  if(cp.type==='mem' && selPack){
+    if(selPack.val < cp.minVal || selPack.val > cp.maxVal){
+      showCouponMsg('warn',`⚠️ "${code}" is not valid for this plan duration. ${cp.desc}`);
+      appliedCoupon=null; refreshDiscounts(); return;
+    }
+  }
+  if(cp.type==='mem' && !selPack){
+    showCouponMsg('warn','⚠️ Please select a membership pack first, then apply the coupon.');
+    return;
+  }
+  appliedCoupon = {...cp, code};
+  showCouponMsg('ok',`✓ Coupon "${code}" applied! ${cp.desc} · Saving ₹${cp.discount.toLocaleString('en-IN')}`);
+  refreshDiscounts();
+}
+
+function showCouponMsg(type, text){
+  const msg = document.getElementById('coupon-msg');
+  if(!msg) return;
+  const styles = {
+    ok:   'background:#E8F5E9;color:#1B5E20;border:1px solid #A5D6A7',
+    warn: 'background:#FFF3E0;color:#E65100;border:1px solid #FFCC80',
+    error:'background:#FFEBEE;color:#B71C1C;border:1px solid #FFCDD2',
+  };
+  msg.style.cssText = (styles[type]||styles.error)+';display:block;padding:9px 12px;border-radius:6px;font-size:12px;font-weight:600';
+  msg.textContent = text;
+}
+
+function refreshDiscounts(){
+  if(!selPack) return;
+  const memDiscount = (appliedCoupon && appliedCoupon.type==='mem') ? appliedCoupon.discount : 0;
+  const finalPrice  = Math.max(0, selPack.price - memDiscount);
+  const base  = Math.round(finalPrice / 1.18);
+  const gst   = finalPrice - base;
+  const discStr = memDiscount ? ` − ₹${memDiscount.toLocaleString('en-IN')} (${appliedCoupon.code})` : '';
+  // Update order summary total
+  const st = document.getElementById('sum-total');
+  if(st) st.textContent = `₹${finalPrice.toLocaleString('en-IN')}${discStr} + ₹0 (Reg. Fee waived)`;
+  // Update payment amounts
+  const pt = document.getElementById('pay-total-shown');
+  const pb = document.getElementById('pay-base-shown');
+  const pg = document.getElementById('pay-gst-shown');
+  const pf = document.getElementById('pay-final');
+  if(pt) pt.textContent = `₹${selPack.price.toLocaleString('en-IN')}` + (memDiscount?` − ₹${memDiscount.toLocaleString('en-IN')} (coupon)`:'');
+  if(!window.isCash){
+    if(pb) pb.textContent = `₹${base.toLocaleString('en-IN')} (base excl. GST)`;
+    if(pg) pg.textContent = `₹${gst.toLocaleString('en-IN')} (18% GST)`;
+  }
+  if(pf) pf.textContent = `₹${finalPrice.toLocaleString('en-IN')}`;
+  const btn = document.getElementById('pay-btn');
+  if(btn && paymentMode && !isCash){
+    btn.innerHTML = `<svg viewBox="0 0 24 24" style="width:14px;height:14px;fill:currentColor"><path d="M20 4H4c-1.11 0-2 .89-2 2v12c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Pay ₹${finalPrice.toLocaleString('en-IN')} via ${paymentMode.toUpperCase()}`;
+  }
+}
+
+// Also patch buildReview to include coupon + validity dates
+const _br_orig = buildReview;
+function buildReview(){
+  _br_orig();
+  // Append coupon + validity info to the membership review section
+  const couponInfo = appliedCoupon ? `${appliedCoupon.code} — ${appliedCoupon.desc}` : 'None';
+  const dates = selPack ? calcValidityDates(selPack.val) : null;
+  // Find the membership rev-sec and append rows
+  const revContent = document.getElementById('review-content');
+  if(revContent && selPack){
+    const memSec = revContent.querySelector('.rev-sec:nth-child(3)');
+    if(memSec){
+      if(dates){
+        memSec.innerHTML += `<div class="rev-row"><span class="rk">Valid From</span><span class="rv" style="color:var(--green)">${dates.start}</span></div>`;
+        memSec.innerHTML += `<div class="rev-row"><span class="rk">Valid Until</span><span class="rv" style="color:var(--gold2)">${dates.end}</span></div>`;
+      }
+      if(appliedCoupon){
+        memSec.innerHTML += `<div class="rev-row"><span class="rk">Coupon Applied</span><span class="rv" style="color:var(--green);font-weight:700">${couponInfo}</span></div>`;
+      }
+    }
+  }
+}
+
+</script> -->
+
+
+
+<!-- ══════════════════════════════════════════════
+     GOOGLE SHEETS BACKEND — Option B Implementation
+══════════════════════════════════════════════ -->
+<div id="gs-setup" style="max-width:820px;margin:24px auto 0;background:#fff;border-radius:12px;border:2px solid #B5D4F4;padding:20px 24px;display:none">
+  <div style="font-family:'Barlow Condensed',sans-serif;font-size:15px;font-weight:700;color:#0C447C;letter-spacing:1px;margin-bottom:12px">
+    🔗 Google Sheets Integration — Setup Guide
+  </div>
+  <div style="font-size:12px;color:#4A5C72;line-height:1.8">
+    <strong>Step 1.</strong> Create a Google Sheet with columns: Timestamp, Reg_ID, Name, DOB, Age_Group, Parent_Phone, Email, Pack, Price, Shift, Sports, Transport_Sector, Transport_Society, Payment_Method, Status<br>
+    <strong>Step 2.</strong> In Google Sheets: Extensions → Apps Script → paste this code:<br>
+    <pre style="background:#F5F5F5;border-radius:6px;padding:12px;font-size:10px;overflow:auto;margin:8px 0">function doPost(e) {
+  const sheet = SpreadsheetApp.getActiveSheet();
+  const data = JSON.parse(e.postData.contents);
+  sheet.appendRow([
+    new Date(), data.reg_id, data.name, data.dob,
+    data.age_group, data.parent_phone, data.email,
+    data.pack, data.price, data.shift, data.sports,
+    data.transport_sector, data.transport_society,
+    data.payment_method, data.status
+  ]);
+  return ContentService.createTextOutput(JSON.stringify({status:'ok',reg_id:data.reg_id}))
+    .setMimeType(ContentService.MimeType.JSON);
+}
+function doGet(e) {
+  return ContentService.createTextOutput('TPA Registration API — Active');
+}</pre>
+    <strong>Step 3.</strong> Deploy as Web App → Execute as Me → Anyone can access<br>
+    <strong>Step 4.</strong> Copy the Web App URL and set it in the form below:<br>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <input type="text" id="gs-url" placeholder="https://script.google.com/macros/s/YOUR_ID/exec" style="flex:1;height:36px;border:1px solid #B5D4F4;border-radius:6px;padding:0 10px;font-size:12px">
+      <button onclick="saveGSUrl()" style="background:#0C447C;color:#fff;border:none;border-radius:6px;padding:0 14px;font-size:12px;font-weight:600;cursor:pointer">Save URL</button>
+    </div>
+    <div id="gs-status" style="margin-top:6px;font-size:11px;color:var(--green)"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     STOCK MANAGEMENT PANEL
+══════════════════════════════════════════════ -->
+<div id="stock-panel" style="max-width:820px;margin:24px auto 0;background:#fff;border-radius:12px;border:2px solid var(--border);overflow:hidden">
+  <div style="background:var(--navy);padding:16px 24px;display:flex;align-items:center;gap:10px;cursor:pointer" onclick="toggleStock()">
+    <svg viewBox="0 0 24 24" style="width:18px;height:18px;fill:#D4FF00"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+    <span style="font-family:'Barlow Condensed',sans-serif;font-size:16px;font-weight:700;color:#fff;letter-spacing:1px">SLOT CAPACITY MANAGER</span>
+    <span style="font-size:11px;color:rgba(255,255,255,.4);margin-left:4px">· Track available slots per class</span>
+    <span id="stock-toggle-icon" style="margin-left:auto;color:#D4FF00;font-size:18px">▼</span>
+  </div>
+  <div id="stock-body" style="padding:20px 24px;display:none">
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px;align-items:flex-end">
+      <div class="field" style="flex:1;min-width:160px">
+        <label>Sport / Category</label>
+        <select id="stock-sport" onchange="refreshStock()">
+          <option value="all">All Categories</option>
+          <option>Munchkin (3–7)</option>
+          <option>Under-13 (8–12)</option>
+          <option>Under-17 (13–17)</option>
+          <option>Elite Champions</option>
+          <option>Adults (18+)</option>
+          <option>Football</option><option>Cricket</option><option>Basketball</option>
+          <option>Volleyball</option><option>Badminton</option><option>Table Tennis</option>
+          <option>Skating</option><option>Dance &amp; Yoga</option>
+        </select>
+      </div>
+      <div class="field" style="flex:1;min-width:120px">
+        <label>Day</label>
+        <select id="stock-day" onchange="refreshStock()">
+          <option value="all">All Days</option>
+          <option>Monday</option><option>Tuesday</option><option>Wednesday</option>
+          <option>Thursday</option><option>Friday</option><option>Saturday</option>
+        </select>
+      </div>
+      <button onclick="exportStock()" style="background:var(--navy);color:#fff;border:none;border-radius:var(--radius);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;height:40px">Export CSV</button>
+      <button onclick="addSlot()" style="background:var(--gold);color:var(--navy);border:none;border-radius:var(--radius);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px;height:40px">+ Add Slot</button>
+    </div>
+
+    <!-- Slot grid -->
+    <div id="slot-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:16px"></div>
+
+    <!-- Add slot form -->
+    <div id="add-slot-form" style="display:none;background:#F7F8FA;border:1px solid var(--border);border-radius:var(--radius);padding:14px;margin-top:10px">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:1px;margin-bottom:10px;text-transform:uppercase">Add New Slot</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="field">
+          <label>Category</label>
+          <select id="ns-cat">
+            <option>Munchkin (3–7)</option><option>Under-13 (8–12)</option>
+            <option>Under-17 (13–17)</option><option>Elite Champions</option><option>Adults (18+)</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Sport</label>
+          <select id="ns-sport">
+            <option>Multi-sport</option><option>Football</option><option>Cricket</option><option>Basketball</option>
+            <option>Volleyball</option><option>Badminton</option><option>Table Tennis</option><option>Skating</option><option>Dance &amp; Yoga</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Day(s)</label>
+          <select id="ns-day">
+            <option>Monday–Saturday</option><option>Mon/Wed/Fri</option><option>Tue/Thu/Sat</option>
+            <option>Mon–Fri</option><option>Saturday only</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Time Slot</label>
+          <select id="ns-time">
+            <option>4:00–6:00 PM</option><option>5:00–6:00 PM</option><option>5:00–7:00 PM</option>
+            <option>6:00–7:00 PM</option><option>6:00–8:00 PM</option><option>7:00–8:00 PM</option>
+          </select>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px">
+        <div class="field"><label>Max Capacity</label><input type="number" id="ns-max" value="20" min="1" max="100"></div>
+        <div class="field"><label>Enrolled</label><input type="number" id="ns-enrolled" value="0" min="0"></div>
+        <div class="field"><label>Coach</label><input type="text" id="ns-coach" placeholder="Coach name"></div>
+      </div>
+      <div style="display:flex;gap:8px">
+        <button onclick="saveSlot()" style="background:var(--navy);color:#fff;border:none;border-radius:var(--radius);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer">Save Slot</button>
+        <button onclick="document.getElementById('add-slot-form').style.display='none'" style="background:none;border:1px solid var(--border);border-radius:var(--radius);padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-size:12px;cursor:pointer">Cancel</button>
+      </div>
+    </div>
+
+    <!-- Summary row -->
+    <div id="stock-summary" style="background:var(--navy2);border-radius:var(--radius);padding:12px 16px;display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-top:12px">
+      <div style="text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#fff" id="stat-total-slots">0</div><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1px">TOTAL SLOTS</div></div>
+      <div style="text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#D4FF00" id="stat-total-cap">0</div><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1px">TOTAL CAPACITY</div></div>
+      <div style="text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:var(--gold)" id="stat-enrolled">0</div><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1px">ENROLLED</div></div>
+      <div style="text-align:center"><div style="font-family:'Bebas Neue',sans-serif;font-size:28px;color:#4CAF50" id="stat-available">0</div><div style="font-size:10px;color:rgba(255,255,255,.45);letter-spacing:1px">AVAILABLE</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- Toggle buttons for panels -->
+<div style="max-width:820px;margin:16px auto 0;display:flex;gap:10px;justify-content:center">
+  <button onclick="document.getElementById('gs-setup').style.display=document.getElementById('gs-setup').style.display==='none'?'block':'none'" style="background:var(--navy);color:#fff;border:none;border-radius:var(--radius);padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px">
+    🔗 Google Sheets Setup
+  </button>
+  <button onclick="toggleStock()" style="background:var(--navy);color:#D4FF00;border:1px solid #D4FF00;border-radius:var(--radius);padding:8px 18px;font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;cursor:pointer;letter-spacing:1px">
+    📊 Open Slot Manager
+  </button>
+</div>
+
+<script>
+// ═══ GOOGLE SHEETS INTEGRATION ═══
+let GS_URL = localStorage.getItem('tpa_gs_url')||'';
+function saveGSUrl(){
+  GS_URL=document.getElementById('gs-url').value.trim();
+  localStorage.setItem('tpa_gs_url',GS_URL);
+  document.getElementById('gs-status').textContent='✓ URL saved. Test by submitting a registration.';
+}
+
+async function sendToSheets(data){
+  if(!GS_URL)return;
+  try{
+    await fetch(GS_URL,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(data)});
+  }catch(e){console.log('Sheets sync failed:',e);}
+}
+
+// ═══ STOCK MANAGEMENT ═══
+let SLOTS = JSON.parse(localStorage.getItem('tpa_slots')||'[]');
+if(!SLOTS.length){
+  // Default starter slots
+  SLOTS=[
+    {id:1,cat:'Munchkin (3–7)',sport:'Multi-sport',day:'Mon/Wed/Fri',time:'5:00–6:00 PM',max:20,enrolled:0,coach:''},
+    {id:2,cat:'Under-13 (8–12)',sport:'Football',day:'Mon–Sat',time:'4:00–6:00 PM',max:25,enrolled:0,coach:''},
+    {id:3,cat:'Under-13 (8–12)',sport:'Cricket',day:'Mon–Sat',time:'5:00–7:00 PM',max:20,enrolled:0,coach:''},
+    {id:4,cat:'Under-13 (8–12)',sport:'Basketball',day:'Mon–Sat',time:'6:00–8:00 PM',max:20,enrolled:0,coach:''},
+    {id:5,cat:'Under-17 (13–17)',sport:'Football',day:'Mon–Sat',time:'5:00–7:00 PM',max:20,enrolled:0,coach:''},
+    {id:6,cat:'Elite Champions',sport:'Multi-sport',day:'Monday–Saturday',time:'6:00–8:00 PM',max:15,enrolled:0,coach:''},
+    {id:7,cat:'Adults (18+)',sport:'Multi-sport',day:'Mon/Wed/Fri',time:'7:00–8:00 PM',max:25,enrolled:0,coach:''},
+    {id:8,cat:'Under-13 (8–12)',sport:'Badminton',day:'Tue/Thu/Sat',time:'5:00–6:00 PM',max:16,enrolled:0,coach:''},
+    {id:9,cat:'Under-13 (8–12)',sport:'Table Tennis',day:'Tue/Thu/Sat',time:'6:00–7:00 PM',max:16,enrolled:0,coach:''},
+  ];
+  saveSlots();
+}
+
+function saveSlots(){localStorage.setItem('tpa_slots',JSON.stringify(SLOTS));}
+
+function toggleStock(){
+  const b=document.getElementById('stock-body');
+  const ic=document.getElementById('stock-toggle-icon');
+  const open=b.style.display==='none';
+  b.style.display=open?'block':'none';
+  ic.textContent=open?'▲':'▼';
+  if(open)refreshStock();
+}
+
+function refreshStock(){
+  const cat=document.getElementById('stock-sport')?.value;
+  const day=document.getElementById('stock-day')?.value;
+  let filtered=SLOTS;
+  if(cat&&cat!=='all')filtered=filtered.filter(s=>s.cat===cat||s.sport===cat);
+  if(day&&day!=='all')filtered=filtered.filter(s=>s.day.includes(day)||s.day==='Monday–Saturday');
+  renderSlots(filtered);
+  updateStats(filtered);
+}
+
+function renderSlots(slots){
+  const g=document.getElementById('slot-grid');if(!g)return;
+  if(!slots.length){g.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--text3);font-size:12px">No slots found for selected filters.</div>';return;}
+  g.innerHTML=slots.map(s=>{
+    const pct=Math.round((s.enrolled/s.max)*100);
+    const col=pct>=100?'#B71C1C':pct>=80?'#E65100':'#1B5E20';
+    const avail=s.max-s.enrolled;
+    return `<div style="border:1.5px solid var(--border);border-radius:var(--radius);padding:12px;background:var(--off);position:relative">
+      <div style="font-family:'Barlow Condensed',sans-serif;font-size:12px;font-weight:700;color:var(--navy);letter-spacing:.5px">${s.cat}</div>
+      <div style="font-size:11px;color:var(--text2);margin-top:1px">${s.sport} · ${s.time}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:1px">${s.day}${s.coach?' · '+s.coach:''}</div>
+      <div style="margin:8px 0 4px;background:#E0E0E0;border-radius:10px;height:6px;overflow:hidden">
+        <div style="width:${Math.min(pct,100)}%;height:100%;background:${col};border-radius:10px;transition:width .3s"></div>
+      </div>
+      <div style="display:flex;justify-content:space-between;font-size:10px">
+        <span style="color:${col};font-weight:600">${s.enrolled}/${s.max} enrolled</span>
+        <span style="color:${avail>0?'#1B5E20':'#B71C1C'};font-weight:700">${avail>0?avail+' available':'FULL'}</span>
+      </div>
+      <div style="position:absolute;top:8px;right:8px;display:flex;gap:4px">
+        <button onclick="editSlot(${s.id})" style="background:none;border:none;cursor:pointer;font-size:12px;padding:2px" title="Edit">✏️</button>
+        <button onclick="deleteSlot(${s.id})" style="background:none;border:none;cursor:pointer;font-size:12px;padding:2px" title="Delete">🗑️</button>
+        <button onclick="enrollSlot(${s.id},1)" style="background:none;border:none;cursor:pointer;font-size:12px;padding:2px" title="Enrol one">+1</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function updateStats(slots){
+  const tc=slots.reduce((a,s)=>a+s.max,0);
+  const te=slots.reduce((a,s)=>a+s.enrolled,0);
+  document.getElementById('stat-total-slots').textContent=slots.length;
+  document.getElementById('stat-total-cap').textContent=tc;
+  document.getElementById('stat-enrolled').textContent=te;
+  document.getElementById('stat-available').textContent=tc-te;
+}
+
+function addSlot(){document.getElementById('add-slot-form').style.display='block';}
+
+function saveSlot(){
+  const s={
+    id:Date.now(),
+    cat:document.getElementById('ns-cat').value,
+    sport:document.getElementById('ns-sport').value,
+    day:document.getElementById('ns-day').value,
+    time:document.getElementById('ns-time').value,
+    max:parseInt(document.getElementById('ns-max').value)||20,
+    enrolled:parseInt(document.getElementById('ns-enrolled').value)||0,
+    coach:document.getElementById('ns-coach').value,
+  };
+  SLOTS.push(s);saveSlots();
+  document.getElementById('add-slot-form').style.display='none';
+  refreshStock();
+}
+
+function deleteSlot(id){if(!confirm('Delete this slot?'))return;SLOTS=SLOTS.filter(s=>s.id!==id);saveSlots();refreshStock();}
+function enrollSlot(id,n){const s=SLOTS.find(x=>x.id===id);if(s&&s.enrolled<s.max){s.enrolled+=n;saveSlots();refreshStock();}}
+
+function editSlot(id){
+  const s=SLOTS.find(x=>x.id===id);if(!s)return;
+  const neu=prompt(`Enrolled count for "${s.cat} · ${s.sport} · ${s.time}":`,s.enrolled);
+  if(neu!==null&&!isNaN(parseInt(neu))){s.enrolled=Math.min(parseInt(neu),s.max);saveSlots();refreshStock();}
+}
+
+function exportStock(){
+  const rows=[['Category','Sport','Day','Time','Max','Enrolled','Available','Coach']];
+  SLOTS.forEach(s=>rows.push([s.cat,s.sport,s.day,s.time,s.max,s.enrolled,s.max-s.enrolled,s.coach]));
+  const csv=rows.map(r=>r.join(',')).join('\n');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,'+encodeURIComponent(csv);
+  a.download='TPA_Slot_Stock_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+}
+
+// Hook: when a registration is submitted, update slot count
+const _origShowSuccess=showSuccess;
+function showSuccess(type,payId){
+  _origShowSuccess(type,payId);
+  // Auto-update slot count for the selected shift/category
+  if(selPack&&selCat){
+    const shift=document.querySelector('input[name="shift"]:checked')?.value;
+    const slot=SLOTS.find(s=>{
+      const catMap={munchkin:'Munchkin (3–7)',u13:'Under-13 (8–12)',u17:'Under-17 (13–17)',elite:'Elite Champions',adult:'Adults (18+)'};
+      return s.cat===catMap[selCat]&&shift&&s.time.includes(shift.split('–')[0].trim());
+    });
+    if(slot&&slot.enrolled<slot.max){slot.enrolled++;saveSlots();}
+  }
+  // Send to Google Sheets if configured
+  const formData={
+    reg_id:regId,name:g('member-name'),dob:g('dob'),
+    age_group:document.getElementById('age-grp')?.textContent,
+    parent_phone:g('parent-phone'),email:g('email'),
+    pack:selPack?selPack.name:'Enquiry',
+    price:selPack?selPack.price:0,
+    shift:document.querySelector('input[name="shift"]:checked')?.value||'',
+    sports:Array.from(document.querySelectorAll('input[name="sports"]:checked')).map(c=>c.value).join(','),
+    transport_sector:g('transport-sector'),
+    transport_society:g('transport-society'),
+    payment_method:paymentMode||type,
+    status:type
+  };
+  sendToSheets(formData);
+}
+</script>
+</body>
+</html>
